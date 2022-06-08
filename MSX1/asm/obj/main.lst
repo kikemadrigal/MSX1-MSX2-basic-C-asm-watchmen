@@ -1,0 +1,767 @@
+# file opened: src/main.asm
+  1   0000                      ;output "main.bin"
+  2   0000 FE               db   0FEh               ; ID archivo binario, siempre hay que poner el mismo 0FEh
+  3   0001 00 C1            dw   INICIO             ; dirección de inicio
+  4   0003 2A C5            dw   FINAL - 1          ; dirección final
+  5   0005 00 C1            dw   MAIN               ; dircción del programa de ejecución (para cuando pongas r en bload"nombre_programa", r)
+  6   0007
+  7   0007
+  8   0007
+  9   0007                  org #c100              ; org se utiliza para decirle al z80 en que posición de memoria empieza nuestro programa (es la 33280 en decimal), en hezadecimal sería #8200
+ 10   C100
+ 11   C100              INICIO:
+ 12   C100
+ 13   C100              MAIN:
+ 14   C100 CD 0D C1         call INITPSG
+ 15   C103 CD 08 C1         call loop
+ 16   C106 18 FE            jr $
+ 17   C108
+ 18   C108              loop:
+ 19   C108 CD 55 C1         call TECLADO1
+ 20   C10B 18 FB            jr loop
+ 21   C10D
+ 22   C10D
+ 23   C10D CD 90 00     INITPSG	call GICINI	; inicializa el PSG
+ 24   C110              	;Le metemos la constante con el valor 8 que es el puerto del psg a modificar
+ 25   C110 3E 08        	ld	a, PSG_VOL_A
+ 26   C112 1E 0F        	ld	e, #0f
+ 27   C114 CD 93 00     	call	WRTPSG
+ 28   C117 3E 09        	ld	a, PSG_VOL_B
+ 29   C119 1E 0F        	ld	e, #0f
+ 30   C11B CD 93 00     	call	WRTPSG
+ 31   C11E 3E 0A        	ld	a, PSG_VOL_C
+ 32   C120 1E 0F        	ld	e, #0f
+ 33   C122 CD 93 00     	call	WRTPSG
+ 34   C125              	; inicializa todos los registros de notas
+ 35   C125 06 06        	ld	b, #06
+ 36   C127 1E 00        	ld	e, #00
+ 37   C129 3E 00        	ld	a, PSG_FREQ_A0
+ 38   C12B CD 93 00     s51	call	WRTPSG
+ 39   C12E 3C           	inc	a	; PSG_FREQ_A-C 0/1
+ 40   C12F 10 FA        	djnz	s51
+ 41   C131              	;
+ 42   C131 3E 07        	ld	a, PSG_SETTINGS
+ 43   C133 1E B8        	ld	e, %10111000	; solo tono en A, B, y C
+ 44   C135 CD 93 00     	call	WRTPSG
+ 45   C138 3E 06        	ld	a, PSG_NOISE
+ 46   C13A 1E 02        	ld	e, #02
+ 47   C13C CD 93 00     	call	WRTPSG
+ 48   C13F 3E 0B        	ld	a, PSG_ENVEL0
+ 49   C141 1E 03        	ld	e, #03
+ 50   C143 CD 93 00     	call	WRTPSG
+ 51   C146 3E 0C        	ld	a, PSG_ENVEL1
+ 52   C148 1E 14        	ld	e, #14
+ 53   C14A CD 93 00     	call	WRTPSG
+ 54   C14D 3E 0D        	ld	a, PSG_PATTERN
+ 55   C14F 1E 0E        	ld	e, #0e
+ 56   C151 CD 93 00     	call	WRTPSG
+ 57   C154 C9           	ret
+ 58   C155
+ 59   C155              TECLADO1:	; comprobamos si esta habilitado el teclado
+ 60   C155 3A 0D C5     	ld	a, (keyena1)
+ 61   C158 FE 01        	cp	ENABLE
+ 62   C15A C0           	ret	nz
+ 63   C15B              	; comprobamos la tecla pulsada
+ 64   C15B 3E 00        	ld 	a,#00
+ 65   C15D CD 41 01     	call	SNSMAT
+ 66   C160 CB 4F        	bit	1,a	; '1'
+ 67   C162 CA 5D C3     	jp	z,t1cs1
+ 68   C165 CB 57        	bit	2,a	; '2'
+ 69   C167 CA 73 C3     	jp	z,t1ds1
+ 70   C16A CB 67        	bit	4,a	; '4'
+ 71   C16C CA 89 C3     	jp	z,t1fs1
+ 72   C16F CB 6F        	bit	5,a	; '5'
+ 73   C171 CA 9F C3     	jp	z,t1gs1
+ 74   C174 CB 77        	bit	6,a	; '6'
+ 75   C176 CA B5 C3     	jp	z,t1as1
+ 76   C179              	;
+ 77   C179 3E 01        	ld	a,#01
+ 78   C17B CD 41 01     	call	SNSMAT
+ 79   C17E CB 47        	bit	0,a	; '8'
+ 80   C180 CA CB C3     	jp	z,t1cs2
+ 81   C183 CB 4F        	bit	1,a	; '9'
+ 82   C185 CA E1 C3     	jp	z,t1ds2
+ 83   C188 CB 57        	bit	2,a	; '-'
+ 84   C18A CA F7 C3     	jp	z,t1fs2
+ 85   C18D CB 5F        	bit	3,a	; '='
+ 86   C18F CA 0D C4     	jp	z,t1gs2
+ 87   C192 CB 67        	bit	4,a	; '\'
+ 88   C194 CA 23 C4     	jp	z,t1as2
+ 89   C197 CB 6F        	bit	5,a	; '['
+ 90   C199 CA 1B C3     	jp	z,t1g2
+ 91   C19C CB 77        	bit	6,a	; ']'
+ 92   C19E CA 31 C3     	jp	z,t1a2
+ 93   C1A1              	;
+ 94   C1A1 3E 03        	ld	a,#03
+ 95   C1A3 CD 41 01     	call	SNSMAT
+ 96   C1A6 CB 77        	bit	6,a	; 'I'
+ 97   C1A8 CA D9 C2     	jp	z,t1d2
+ 98   C1AB CB 57        	bit	2,a	; 'E'
+ 99   C1AD CA 6B C2     	jp	z,t1f1
+100   C1B0              	;
+101   C1B0 3E 04        	ld	a,#04
+102   C1B2 CD 41 01     	call	SNSMAT
+103   C1B5 CB 7F        	bit	7,a	; 'R'
+104   C1B7 CA 81 C2     	jp	z,t1g1
+105   C1BA CB 77        	bit	6,a	; 'Q'
+106   C1BC CA 3F C2     	jp	z,t1d1
+107   C1BF CB 6F        	bit	5,a	; 'P'
+108   C1C1 CA 05 C3     	jp	z,t1f2
+109   C1C4 CB 67        	bit	4,a	; 'O'
+110   C1C6 CA EF C2     	jp	z,t1e2
+111   C1C9              	;
+112   C1C9 3E 05        	ld	a,#05
+113   C1CB CD 41 01     	call	SNSMAT
+114   C1CE CB 67        	bit	4,a	; 'W'
+115   C1D0 CA 55 C2     	jp	z,t1e1
+116   C1D3 CB 4F        	bit	1,a	; 'T'
+117   C1D5 CA 97 C2     	jp	z,t1a1
+118   C1D8 CB 77        	bit	6,a	; 'Y'
+119   C1DA CA AD C2     	jp	z,t1b1
+120   C1DD CB 57        	bit	2,a	; 'U'
+121   C1DF CA C3 C2     	jp	z,t1c2
+122   C1E2              	;
+123   C1E2 3E 07        	ld	a,#07
+124   C1E4 CD 41 01     	call	SNSMAT
+125   C1E7 CB 77        	bit	6,a	; 'SEL'
+126   C1E9 CA 47 C3     	jp	z,t1b2
+127   C1EC CB 5F        	bit	3,a	; 'TAB'
+128   C1EE CA 29 C2     	jp	z,t1c1
+129   C1F1              	; no hay tecla pulsada
+130   C1F1 3E 00        	ld	a,#00
+131   C1F3 32 0C C5     	ld	(curkey1),a
+132   C1F6 1E 00        	ld	e, notaoff
+133   C1F8 0E 00        	ld	c, #00
+134   C1FA 06 CF        	ld	b,#cf
+135   C1FC              	;
+136   C1FC              	; situamos 4 sprites 16x16 y generamos el sonido
+137   C1FC              	; A: coordenadas X de los sprites
+138   C1FC              	; B: coordenadas Y de los sprites
+139   C1FC              	; E: codigo de nota
+140   C1FC              	; C: codigo de octava
+141   C1FC              	;
+142   C1FC              	; coordenadas X
+143   C1FC              t1fin
+144   C1FC              	;
+145   C1FC              	; nota = tablanotas + nota x 16 + octava x 2
+146   C1FC 21 39 C4     	ld	hl, tablanotas ; HL = tablanotas
+147   C1FF 06 00        	ld	b, #00
+148   C201 3A 09 C5     	ld	a, (octave1)
+149   C204 81           	add	a, c	; incremento de octava del teclado
+150   C205              	;sla es un desplazamiento aritmético de los bits a la izquierda  es como multiplicar por 2
+151   C205 CB 27        	sla	a
+152   C207 4F           	ld	c, a
+153   C208 09           	add	hl, bc	; HL += octava x 2
+154   C209 CB 23        	sla	e
+155   C20B CB 23        	sla	e
+156   C20D CB 23        	sla	e
+157   C20F CB 23        	sla	e
+158   C211 4B           	ld	c, e
+159   C212 09           	add	hl, bc	; HL += nota x 16
+160   C213              	;
+161   C213              	; establece el valor de la nota en el PSG
+162   C213 7E           	ld	a, (hl)
+163   C214              	;curnote1 ultima nota reproducida (12 bits)
+164   C214 32 0A C5     	ld	(curnote1), a	; almacena la nota (L)
+165   C217 5F           	ld	e, a
+166   C218 3E 00        	ld	a, PSG_FREQ_A0
+167   C21A CD 93 00     	call	WRTPSG
+168   C21D              	;
+169   C21D 23           	inc	hl
+170   C21E 7E           	ld	a, (hl)
+171   C21F 32 0B C5     	ld	(curnote1+1), a ; almacena la nota (H)
+172   C222 5F           	ld	e, a
+173   C223 3E 01        	ld	a, PSG_FREQ_A1
+174   C225 CD 93 00     	call	WRTPSG
+175   C228 C9           	ret
+176   C229              	; establecimiento de notas y sus parametros
+177   C229              	;
+178   C229              	; notas naturales
+179   C229              	;
+180   C229              ;curkey1 ultima tecla pulsada
+181   C229 3A 0C C5     t1c1	ld	a,(curkey1)
+182   C22C FE 01        	cp	#01
+183   C22E C8           	ret	z
+184   C22F 3E 01        	ld	a,#01
+185   C231 32 0C C5     	ld	(curkey1),a
+186   C234 1E 01        	ld	e, notaC
+187   C236 0E 00        	ld	c, #00
+188   C238 06 2D        	ld	b,#2d
+189   C23A 3E 2D        	ld	a,#2d
+190   C23C C3 FC C1     	jp	t1fin
+191   C23F              	;
+192   C23F 3A 0C C5     t1d1	ld	a,(curkey1)
+193   C242 FE 02        	cp	#02
+194   C244 C8           	ret	z
+195   C245 3E 02        	ld	a,#02
+196   C247 32 0C C5     	ld	(curkey1),a
+197   C24A 1E 03        	ld	e, notaD
+198   C24C 0E 00        	ld	c, #00
+199   C24E 06 2D        	ld	b,#2d
+200   C250 3E 37        	ld	a,#37
+201   C252 C3 FC C1     	jp	t1fin
+202   C255              	;
+203   C255 3A 0C C5     t1e1	ld	a,(curkey1)
+204   C258 FE 03        	cp	#03
+205   C25A C8           	ret	z
+206   C25B 3E 03        	ld	a,#03
+207   C25D 32 0C C5     	ld	(curkey1),a
+208   C260 1E 05        	ld	e, notaE
+209   C262 0E 00        	ld	c, #00
+210   C264 06 2D        	ld	b,#2d
+211   C266 3E 41        	ld	a,#41
+212   C268 C3 FC C1     	jp	t1fin
+213   C26B              	;
+214   C26B 3A 0C C5     t1f1	ld	a,(curkey1)
+215   C26E FE 04        	cp	#04
+216   C270 C8           	ret	z
+217   C271 3E 04        	ld	a,#04
+218   C273 32 0C C5     	ld	(curkey1),a
+219   C276 1E 06        	ld	e, notaF
+220   C278 0E 00        	ld	c, #00
+221   C27A 06 2D        	ld	b,#2d
+222   C27C 3E 4B        	ld	a,#4b
+223   C27E C3 FC C1     	jp	t1fin
+224   C281              	;
+225   C281 3A 0C C5     t1g1	ld	a,(curkey1)
+226   C284 FE 05        	cp	#05
+227   C286 C8           	ret	z
+228   C287 3E 05        	ld	a,#05
+229   C289 32 0C C5     	ld	(curkey1),a
+230   C28C 1E 08        	ld	e, notaG
+231   C28E 0E 00        	ld	c, #00
+232   C290 06 2D        	ld	b,#2d
+233   C292 3E 55        	ld	a,#55
+234   C294 C3 FC C1     	jp	t1fin
+235   C297              	;
+236   C297 3A 0C C5     t1a1	ld	a,(curkey1)
+237   C29A FE 06        	cp	#06
+238   C29C C8           	ret	z
+239   C29D 3E 06        	ld	a,#06
+240   C29F 32 0C C5     	ld	(curkey1),a
+241   C2A2 1E 0A        	ld	e, notaA
+242   C2A4 0E 00        	ld	c, #00
+243   C2A6 06 2D        	ld	b,#2d
+244   C2A8 3E 5F        	ld	a,#5f
+245   C2AA C3 FC C1     	jp	t1fin
+246   C2AD              	;
+247   C2AD 3A 0C C5     t1b1	ld	a,(curkey1)
+248   C2B0 FE 07        	cp	#07
+249   C2B2 C8           	ret	z
+250   C2B3 3E 07        	ld	a,#07
+251   C2B5 32 0C C5     	ld	(curkey1),a
+252   C2B8 1E 0C        	ld	e, notaB
+253   C2BA 0E 00        	ld	c, #00
+254   C2BC 06 2D        	ld	b,#2d
+255   C2BE 3E 69        	ld	a,#69
+256   C2C0 C3 FC C1     	jp	t1fin
+257   C2C3              	;
+258   C2C3 3A 0C C5     t1c2	ld	a,(curkey1)
+259   C2C6 FE 08        	cp	#08
+260   C2C8 C8           	ret	z
+261   C2C9 3E 08        	ld	a,#08
+262   C2CB 32 0C C5     	ld	(curkey1),a
+263   C2CE 1E 01        	ld	e, notaC
+264   C2D0 0E 01        	ld	c, #01
+265   C2D2 06 2D        	ld	b,#2d
+266   C2D4 3E 73        	ld	a,#73
+267   C2D6 C3 FC C1     	jp	t1fin
+268   C2D9              	;
+269   C2D9 3A 0C C5     t1d2	ld	a,(curkey1)
+270   C2DC FE 09        	cp	#09
+271   C2DE C8           	ret	z
+272   C2DF 3E 09        	ld	a,#09
+273   C2E1 32 0C C5     	ld	(curkey1),a
+274   C2E4 1E 03        	ld	e, notaD
+275   C2E6 0E 01        	ld	c, #01
+276   C2E8 06 2D        	ld	b,#2d
+277   C2EA 3E 7D        	ld	a,#7d
+278   C2EC C3 FC C1     	jp	t1fin
+279   C2EF              	;
+280   C2EF 3A 0C C5     t1e2	ld	a,(curkey1)
+281   C2F2 FE 0A        	cp	#0a
+282   C2F4 C8           	ret	z
+283   C2F5 3E 0A        	ld	a,#0a
+284   C2F7 32 0C C5     	ld	(curkey1),a
+285   C2FA 1E 05        	ld	e, notaE
+286   C2FC 0E 01        	ld	c, #01
+287   C2FE 06 2D        	ld	b,#2d
+288   C300 3E 87        	ld	a,#87
+289   C302 C3 FC C1     	jp	t1fin
+290   C305              	;
+291   C305 3A 0C C5     t1f2	ld	a,(curkey1)
+292   C308 FE 0B        	cp	#0b
+293   C30A C8           	ret	z
+294   C30B 3E 0B        	ld	a,#0b
+295   C30D 32 0C C5     	ld	(curkey1),a
+296   C310 1E 06        	ld	e, notaF
+297   C312 0E 01        	ld	c, #01
+298   C314 06 2D        	ld	b,#2d
+299   C316 3E 91        	ld	a,#91
+300   C318 C3 FC C1     	jp	t1fin
+301   C31B              	;
+302   C31B 3A 0C C5     t1g2	ld	a,(curkey1)
+303   C31E FE 0C        	cp	#0c
+304   C320 C8           	ret	z
+305   C321 3E 0C        	ld	a,#0c
+306   C323 32 0C C5     	ld	(curkey1),a
+307   C326 1E 08        	ld	e, notaG
+308   C328 0E 01        	ld	c, #01
+309   C32A 06 2D        	ld	b,#2d
+310   C32C 3E 9B        	ld	a,#9b
+311   C32E C3 FC C1     	jp	t1fin
+312   C331              	;
+313   C331 3A 0C C5     t1a2	ld	a,(curkey1)
+314   C334 FE 0D        	cp	#0d
+315   C336 C8           	ret	z
+316   C337 3E 0D        	ld	a,#0d
+317   C339 32 0C C5     	ld	(curkey1),a
+318   C33C 1E 0A        	ld	e, notaA
+319   C33E 0E 01        	ld	c, #01
+320   C340 06 2D        	ld	b,#2d
+321   C342 3E A5        	ld	a,#a5
+322   C344 C3 FC C1     	jp	t1fin
+323   C347              	;
+324   C347 3A 0C C5     t1b2	ld	a,(curkey1)
+325   C34A FE 0E        	cp	#0e
+326   C34C C8           	ret	z
+327   C34D 3E 0E        	ld	a,#0e
+328   C34F 32 0C C5     	ld	(curkey1),a
+329   C352 1E 0C        	ld	e, notaB
+330   C354 0E 01        	ld	c, #01
+331   C356 06 2D        	ld	b,#2d
+332   C358 3E AF        	ld	a,#af
+333   C35A C3 FC C1     	jp	t1fin
+334   C35D              	;
+335   C35D              	; notas alteradas (cromaticas)
+336   C35D              	;
+337   C35D 3A 0C C5     t1cs1	ld	a,(curkey1)
+338   C360 FE 0F        	cp	#0f
+339   C362 C8           	ret	z
+340   C363 3E 0F        	ld	a,#0f
+341   C365 32 0C C5     	ld	(curkey1),a
+342   C368 1E 02        	ld	e, notaCs
+343   C36A 0E 00        	ld	c, #00
+344   C36C 06 19        	ld	b,#19
+345   C36E 3E 32        	ld	a,#32
+346   C370 C3 FC C1     	jp	t1fin
+347   C373              	;
+348   C373 3A 0C C5     t1ds1	ld	a,(curkey1)
+349   C376 FE 10        	cp	#10
+350   C378 C8           	ret	z
+351   C379 3E 10        	ld	a,#10
+352   C37B 32 0C C5     	ld	(curkey1),a
+353   C37E 1E 04        	ld	e, notaDs
+354   C380 0E 00        	ld	c, #00
+355   C382 06 19        	ld	b,#19
+356   C384 3E 3D        	ld	a, #3d
+357   C386 C3 FC C1     	jp	t1fin
+358   C389              	;
+359   C389 3A 0C C5     t1fs1	ld	a,(curkey1)
+360   C38C FE 11        	cp	#11
+361   C38E C8           	ret	z
+362   C38F 3E 11        	ld	a,#11
+363   C391 32 0C C5     	ld	(curkey1),a
+364   C394 1E 07        	ld	e, notaFs
+365   C396 0E 00        	ld	c, #00
+366   C398 06 19        	ld	b,#19
+367   C39A 3E 50        	ld	a,#50
+368   C39C C3 FC C1     	jp	t1fin
+369   C39F              	;
+370   C39F 3A 0C C5     t1gs1	ld	a,(curkey1)
+371   C3A2 FE 12        	cp	#12
+372   C3A4 C8           	ret	z
+373   C3A5 3E 12        	ld	a,#12
+374   C3A7 32 0C C5     	ld	(curkey1),a
+375   C3AA 1E 09        	ld	e, notaGs
+376   C3AC 0E 00        	ld	c, #00
+377   C3AE 06 19        	ld	b,#19
+378   C3B0 3E 5A        	ld	a,#5a
+379   C3B2 C3 FC C1     	jp	t1fin
+380   C3B5              	;
+381   C3B5 3A 0C C5     t1as1	ld	a,(curkey1)
+382   C3B8 FE 13        	cp	#13
+383   C3BA C8           	ret	z
+384   C3BB 3E 13        	ld	a,#13
+385   C3BD 32 0C C5     	ld	(curkey1),a
+386   C3C0 1E 0B        	ld	e, notaAs
+387   C3C2 0E 00        	ld	c, #00
+388   C3C4 06 19        	ld	b,#19
+389   C3C6 3E 64        	ld	a,#64
+390   C3C8 C3 FC C1     	jp	t1fin
+391   C3CB              	;
+392   C3CB 3A 0C C5     t1cs2	ld	a,(curkey1)
+393   C3CE FE 14        	cp	#14
+394   C3D0 C8           	ret	z
+395   C3D1 3E 14        	ld	a,#14
+396   C3D3 32 0C C5     	ld	(curkey1),a
+397   C3D6 1E 02        	ld	e, notaCs
+398   C3D8 0E 01        	ld	c, #01
+399   C3DA 06 19        	ld	b,#19
+400   C3DC 3E 78        	ld	a,#78
+401   C3DE C3 FC C1     	jp	t1fin
+402   C3E1              	;
+403   C3E1 3A 0C C5     t1ds2	ld	a,(curkey1)
+404   C3E4 FE 15        	cp	#15
+405   C3E6 C8           	ret	z
+406   C3E7 3E 15        	ld	a,#15
+407   C3E9 32 0C C5     	ld	(curkey1),a
+408   C3EC 1E 04        	ld	e, notaDs
+409   C3EE 0E 01        	ld	c, #01
+410   C3F0 06 19        	ld	b,#19
+411   C3F2 3E 82        	ld	a,#82
+412   C3F4 C3 FC C1     	jp	t1fin
+413   C3F7              	;
+414   C3F7 3A 0C C5     t1fs2	ld	a,(curkey1)
+415   C3FA FE 16        	cp	#16
+416   C3FC C8           	ret	z
+417   C3FD 3E 16        	ld	a,#16
+418   C3FF 32 0C C5     	ld	(curkey1),a
+419   C402 1E 07        	ld	e, notaFs
+420   C404 0E 01        	ld	c, #01
+421   C406 06 19        	ld	b,#19
+422   C408 3E 96        	ld	a,#96
+423   C40A C3 FC C1     	jp	t1fin
+424   C40D              	;
+425   C40D 3A 0C C5     t1gs2	ld	a,(curkey1)
+426   C410 FE 17        	cp	#17
+427   C412 C8           	ret	z
+428   C413 3E 17        	ld	a,#17
+429   C415 32 0C C5     	ld	(curkey1),a
+430   C418 1E 09        	ld	e, notaGs
+431   C41A 0E 01        	ld	c, #01
+432   C41C 06 19        	ld	b,#19
+433   C41E 3E A0        	ld	a,#a0
+434   C420 C3 FC C1     	jp	t1fin
+435   C423              	;
+436   C423 3A 0C C5     t1as2	ld	a,(curkey1)
+437   C426 FE 18        	cp	#18
+438   C428 C8           	ret	z
+439   C429 3E 18        	ld	a,#18
+440   C42B 32 0C C5     	ld	(curkey1),a
+441   C42E 1E 0B        	ld	e, notaAs
+442   C430 0E 01        	ld	c, #01
+443   C432 06 19        	ld	b,#19
+444   C434 3E AA        	ld	a,#aa
+445   C436 C3 FC C1     	jp	t1fin
+446   C439
+447   C439
+448   C439
+449   C439
+450   C439              	;
+451   C439              	; CONSTANTES USUARIO
+452   C439              	;
+453   C439              tespera	equ	#1000
+454   C439              	;
+455   C439              DISABLE	equ	#00	; elemento deshabilitado
+456   C439              ENABLE	equ	#01	; elemento habilitado
+457   C439
+458   C439              	;
+459   C439              	; DEFINICIONES REGISTROS PSG
+460   C439              	;
+461   C439              PSG_FREQ_A0	equ	#00	; Frecuencia canal A (bajo)
+462   C439              PSG_FREQ_A1	equ	#01	; Frecuencia canal A (alto)
+463   C439              PSG_FREQ_B0	equ	#02	; Frecuencia canal B (bajo)
+464   C439              PSG_FREQ_B1	equ	#03	; Frecuencia canal B (alto)
+465   C439              PSG_FREQ_C0	equ	#04	; Frecuencia canal C (bajo)
+466   C439              PSG_FREQ_C1	equ	#05	; Frecuencia canal C (alto)
+467   C439              PSG_NOISE	equ	#06	; Frecuencia del ruido
+468   C439              PSG_SETTINGS	equ	#07	; Configuracion de canales
+469   C439              PSG_VOL_A	equ	#08	; Volumen canal A
+470   C439              PSG_VOL_B	equ	#09	; Volumen canal B
+471   C439              PSG_VOL_C	equ	#0a	; Volumen canal C
+472   C439              PSG_ENVEL0	equ	#0b	; Ciclo envolvente (bajo)
+473   C439              PSG_ENVEL1	equ	#0c	; Ciclo envolvente (alto)
+474   C439              PSG_PATTERN	equ	#0d	; Patron envolvente
+475   C439              PSG_IOPORT_A	equ	#0e	; Puerto de E/S A
+476   C439              PSG_IOPORT_B	equ	#0f	; Puerto de E/S B
+477   C439
+478   C439
+479   C439
+480   C439              	;
+481   C439              	; CODIGOS DE NOTAS
+482   C439              	;
+483   C439              notaoff	equ	#00
+484   C439              notaC	equ	#01
+485   C439              notaCs	equ	#02
+486   C439              notaD	equ	#03
+487   C439              notaDs	equ	#04
+488   C439              notaE	equ	#05
+489   C439              notaF	equ	#06
+490   C439              notaFs	equ	#07
+491   C439              notaG	equ	#08
+492   C439              notaGs	equ	#09
+493   C439              notaA	equ	#0a
+494   C439              notaAs	equ	#0b
+495   C439              notaB	equ	#0c
+496   C439              	;
+497   C439              	; TABLA DE NOTAS (13x16)
+498   C439              	;
+499   C439 00 00 00 00  tablanotas	dw	#0000,#0000,#0000,#0000,#0000,#0000,#0000,#0000 ; note off
+499   C43D 00 00 00 00
+499   C441 00 00 00 00
+499   C445 00 00 00 00
+500   C449 5D 0D AF 06  	dw	#0d5d,#06af,#0357,#01ac,#00d6,#006b,#0035,#001b ; C
+500   C44D 57 03 AC 01
+500   C451 D6 00 6B 00
+500   C455 35 00 1B 00
+501   C459 9C 0C 4E 06  	dw	#0c9c,#064e,#0327,#0194,#00ca,#0065,#0032,#0019 ; Cs
+501   C45D 27 03 94 01
+501   C461 CA 00 65 00
+501   C465 32 00 19 00
+502   C469 E7 0B F4 05  	dw	#0be7,#05f4,#02fa,#017d,#00be,#005f,#0030,#0018 ; D
+502   C46D FA 02 7D 01
+502   C471 BE 00 5F 00
+502   C475 30 00 18 00
+503   C479 3C 0B 9E 05  	dw	#0b3c,#059e,#02cf,#0168,#0084,#005a,#002d,#0016 ; DS
+503   C47D CF 02 68 01
+503   C481 84 00 5A 00
+503   C485 2D 00 16 00
+504   C489 9B 0A 4E 05  	dw	#0a9b,#054e,#02a7,#0153,#00aa,#0055,#002a,#0015 ; E
+504   C48D A7 02 53 01
+504   C491 AA 00 55 00
+504   C495 2A 00 15 00
+505   C499 02 0A 01 05  	dw	#0a02,#0501,#0281,#0140,#00a0,#0050,#0028,#0014 ; F
+505   C49D 81 02 40 01
+505   C4A1 A0 00 50 00
+505   C4A5 28 00 14 00
+506   C4A9 73 09 BA 04  	dw	#0973,#04ba,#025d,#012e,#0097,#004c,#0026,#0013 ; Fs
+506   C4AD 5D 02 2E 01
+506   C4B1 97 00 4C 00
+506   C4B5 26 00 13 00
+507   C4B9 EB 08 76 04  	dw	#08eb,#0476,#023b,#011d,#008f,#0047,#0024,#0012 ; G
+507   C4BD 3B 02 1D 01
+507   C4C1 8F 00 47 00
+507   C4C5 24 00 12 00
+508   C4C9 8B 08 36 04  	dw	#088b,#0436,#021b,#010d,#0087,#0043,#0022,#0011 ; Gs
+508   C4CD 1B 02 0D 01
+508   C4D1 87 00 43 00
+508   C4D5 22 00 11 00
+509   C4D9 F2 07 F9 03  	dw	#07f2,#03f9,#01fd,#00fe,#007f,#0040,#0020,#0010 ; A
+509   C4DD FD 01 FE 00
+509   C4E1 7F 00 40 00
+509   C4E5 20 00 10 00
+510   C4E9 80 07 C0 03  	dw	#0780,#03c0,#01e0,#00f0,#0078,#003c,#001e,#000f ; As
+510   C4ED E0 01 F0 00
+510   C4F1 78 00 3C 00
+510   C4F5 1E 00 0F 00
+511   C4F9 14 07 8A 03  	dw	#0714,#038a,#01c5,#00e3,#0071,#0039,#001c,#000e ; B
+511   C4FD C5 01 E3 00
+511   C501 71 00 39 00
+511   C505 1C 00 0E 00
+512   C509              	;
+513   C509              	; --------------------------------------------------
+514   C509              	;
+515   C509              	; DATOS DINAMICOS
+516   C509              	;
+517   C509              	; --------------------------------------------------
+518   C509              	;
+519   C509              	; TECLADO SUPERIOR #1
+520   C509              	;
+521   C509 04           octave1	db	#04	; octava del teclado
+522   C50A 00 00        curnote1	dw	#0000	; ultima nota reproducida (12 bits)
+523   C50C 00           curkey1	db	#00	; ultima tecla pulsada
+524   C50D 01           keyena1	db	ENABLE	; teclado habilitado?
+525   C50E 00           graena1	db	DISABLE	; grabacion habilitada?
+526   C50F 00 00        buffndx1	dw	#0000	; indice actual de buffer
+527   C511 00 00        buffend1	dw	#0000	; posicion final del buffer
+528   C513              	;
+529   C513              	; TECLADO INFERIOR #2
+530   C513              	;
+531   C513 01           octave2	db	#01	; octava del teclado
+532   C514 00 00        curnote2	dw	#0000	; ultima nota reproducida (12 bits)
+533   C516 00           curkey2	db	#00	; ultima tecla pulsada
+534   C517 01           keyena2	db	ENABLE	; teclado habilitado?
+535   C518 00           graena2	db	DISABLE	; grabacion habilitada?
+536   C519 00 00        buffndx2	dw	#0000	; indice actual de buffer
+537   C51B 00 00        buffend2	dw	#0000	; posicion final del buffer
+538   C51D              	;
+539   C51D              	; ENVOLVENTE
+540   C51D              	;
+541   C51D 00           teclaonda	db	#00	; ultima tecla pulsada
+542   C51E 09           formaonda	db	#09	; patron de forma de onda
+543   C51F 09           frecuencia	db	#09	; frecuencia del patron
+544   C520              	;
+545   C520              	; VOLUMEN
+546   C520              	;
+547   C520 0F           volumen1	db	#0f	; volumen en canal A
+548   C521 0F           volumen2	db	#0f	; volumen en canal B
+549   C522              	;
+550   C522              	; ACOMPAÑAMIENTO
+551   C522              	;
+552   C522 00           sonena	db	DISABLE	; acompañamiento habilitado?
+553   C523 00           sonselec	db	#00	; seleccion patron ritmo (0-4)
+554   C524 00 00        sonndx	dw	#0000	; indice actual acompañamiento
+555   C526 00 00        sonnote	dw	#0000	; valor actual nota (12 bits)
+556   C528 00           sontime	db	#00	; valor actual tiempo
+557   C529 00 00        sonbcknote	dw	#0000	; respaldo de nota canal C
+558   C52B
+559   C52B
+560   C52B
+561   C52B                  include "vars_msxBios.asm"
+# file opened: src/vars_msxBios.asm
+  1+  C52B
+  2+  C52B              ;http://map.grauw.nl/resources/msxbios.php
+  3+  C52B              ; use RST assembler mnemonic to call
+  4+  C52B              CHKRAM equ 0x00 ; RST 0x00 > Check RAM and sets slot for command area.
+  5+  C52B              SYNCHR equ 0x08 ; RST	0x08 > Checks if then current character pointed by HL is one desired.
+  6+  C52B              CHRGTR equ 0x10 ; RST	0x10 > Gets the next character (or token) of the Basic-text
+  7+  C52B              OUTDO  equ 0x18 ; RST	0x18 > Output to current outputchannel (printer, diskfile, etc.)
+  8+  C52B              DCOMPR equ 0x20 ; RST	0x20 > Compares HL with DE
+  9+  C52B              GETYPR equ 0x28 ; RST	0x28 > Returns Type of DAC
+ 10+  C52B              CALLF  equ 0x30 ; RST	0x30 > Executes an interslot call
+ 11+  C52B              KEYINT equ 0x38 ; RST	0x38 > Executes the timer interrupt process routine
+ 12+  C52B
+ 13+  C52B              ; use CALL assembler mnemonic
+ 14+  C52B              RDSLT  equ 0x000C ; Reads the value of an address in another slot
+ 15+  C52B              WRSLT  equ 0x0014 ; Writes a value to an address in another slot
+ 16+  C52B              CALSLT equ 0x001C ; Executes inter-slot call
+ 17+  C52B              ENASLT equ 0x0024 ; Switches indicated slot at indicated page on perpetual
+ 18+  C52B
+ 19+  C52B              ; Initialization-routines
+ 20+  C52B              INITIO equ 0x003B ; Initialises the device
+ 21+  C52B              INIFNK equ 0x003E ; Initialises the contents of the function keys
+ 22+  C52B
+ 23+  C52B              ; VDP routines
+ 24+  C52B              DISSCR equ 0x0041 ; inhibits the screen display
+ 25+  C52B              ENASCR equ 0x0044 ; displays the screen
+ 26+  C52B              WRTVDP equ 0x0047 ; write data in the VDP-register
+ 27+  C52B              RDVRM  equ 0x004A ; Reads the content of VRAM
+ 28+  C52B              WRTVRM equ 0x004D ; Writes data in VRAM
+ 29+  C52B              SETRD  equ 0x0050 ; Enable VDP to read
+ 30+  C52B              SETWRT equ 0x0053 ; Enable VDP to write
+ 31+  C52B              FILVRM equ 0x0056 ; fill VRAM with value
+ 32+  C52B              LDIRMV equ 0x0059 ; Block transfer to memory from VRAM
+ 33+  C52B              LDIRVM equ 0x005C ; Block transfer to VRAM from memory
+ 34+  C52B              CHGMOD equ 0x005F ; Switches to given screenmode
+ 35+  C52B              CHGCLR equ 0x0062 ; Changes the screencolors
+ 36+  C52B              CLRSPR equ 0x0069 ; Initialises all sprites
+ 37+  C52B              INITXT equ 0x006C ; Switches to SCREEN 0 (text screen with 40 * 24 characters)
+ 38+  C52B              INIT32 equ 0x006F ; Switches to SCREEN 1 (text screen with 32*24 characters)
+ 39+  C52B              INIGRP equ 0x0072 ; Switches to SCREEN 2 (high resolution screen with 256*192 pixels)
+ 40+  C52B              INIMLT equ 0x0075 ; Switches to SCREEN 3 (multi-color screen 64*48 pixels)
+ 41+  C52B              SETTXT equ 0x0078 ; Switches to VDP in SCREEN 0 mode
+ 42+  C52B              SETT32 equ 0x007B ; Switches VDP in SCREEN mode 1
+ 43+  C52B              SETGRP equ 0x007E ; Switches VDP to SCREEN 2 mode
+ 44+  C52B              SETMLT equ 0x0081 ; Switches VDP to SCREEN 3 mode
+ 45+  C52B              CALPAT equ 0x0084 ; Returns the address of the sprite pattern table
+ 46+  C52B              CALATR equ 0x0087 ; Returns the address of the sprite attribute table
+ 47+  C52B              GSPSIZ equ 0x008A ; Returns current sprite size
+ 48+  C52B              GRPPRT equ 0x008D ; Displays a character on the graphic screen
+ 49+  C52B
+ 50+  C52B              ; PSG routines
+ 51+  C52B              GICINI equ 0x0090 ; Initialises PSG and sets initial value for the PLAY statement
+ 52+  C52B              WRTPSG equ 0x0093 ; Writes data to PSG-register
+ 53+  C52B              ;Input    : A  - PSG register number
+ 54+  C52B              ;           E  - Data write
+ 55+  C52B              RDPSG  equ 0x0096 ; Reads value from PSG-register
+ 56+  C52B              STRTMS equ 0x0099 ; Tests whether the PLAY statement is being executed as a background task. If not, begins to execute the PLAY statement  */
+ 57+  C52B
+ 58+  C52B              ; Console routines, rutinas de consola
+ 59+  C52B              CHSNS  equ 0x009C ; Tests the status of the keyboard buffer
+ 60+  C52B              CHGET  equ 0x009F ; One character input (waiting)
+ 61+  C52B              CHPUT  equ 0x00A2 ; Displays one character
+ 62+  C52B              LPTOUT equ 0x00A5 ; Sends one character to printer
+ 63+  C52B              LPTSTT equ 0x00A8 ; Tests printer status
+ 64+  C52B              CNVCHR equ 0x00AB ; tests for the graphic header and transforms the code
+ 65+  C52B              PINLIN equ 0x00AE ; Stores in the specified buffer the character codes input until the return key or STOP key is pressed     */
+ 66+  C52B              INLIN  equ 0x00B1 ; Same as PINLIN except that AUGFLG (#F6AA) is set
+ 67+  C52B              QINLIN equ 0x00B4 ; Prints a questionmark andone space
+ 68+  C52B              BREAKX equ 0x00B7 ; Tests status of CTRL-STOP
+ 69+  C52B              ISCNTC equ 0x00BA ; Tests status of SHIFT-STOP
+ 70+  C52B              CKCNTC equ 0x00BD ; Same as ISCNTC. used in Basic
+ 71+  C52B              BEEP   equ 0x00C0 ; generates beep
+ 72+  C52B              BCLS   equ 0x00C3 ; Clears the screen
+ 73+  C52B              POSIT  equ 0x00C6 ; Places the cursor at the specified location
+ 74+  C52B              FNKSB  equ 0x00C9 ; Tests whether the function key display is active (FNKFLG)If so, displays them, otherwise erase them */
+ 75+  C52B              ERAFNK equ 0x00CC ; Erase functionkey display
+ 76+  C52B              DSPFNK equ 0x00CF ; Displays the function keys
+ 77+  C52B              TOTEXT equ 0x00D2 ; Forces the screen to be in the text mode
+ 78+  C52B
+ 79+  C52B              ; Controller routines
+ 80+  C52B              GTSTCK equ 0x00D5 ; Returns the joystick status
+ 81+  C52B              GTTRIG equ 0x00D8 ; Returns current trigger status
+ 82+  C52B              GTPAD  equ 0x00DB ; Returns current touch pad status
+ 83+  C52B              GTPDL  equ 0x00DE ; Returns currenct value of paddle
+ 84+  C52B
+ 85+  C52B              ; Tape device routines
+ 86+  C52B              TAPION equ 0x00E1 ; Reads the header block after turning the cassette motor on
+ 87+  C52B              TAPIN  equ 0x00E4 ; Read data from the tape
+ 88+  C52B              TAPIOF equ 0x00E7 ; Stops reading from the tape
+ 89+  C52B              TAPOON equ 0x00EA ; Turns on the cassette motor and writes the header
+ 90+  C52B              TAPOUT equ 0x00ED ; Writes data on the tape
+ 91+  C52B              TAPOOF equ 0x00F0 ; Stops writing on the tape
+ 92+  C52B              STMOTR equ 0x00F3 ; Sets the cassette motor action
+ 93+  C52B
+ 94+  C52B              ; Queue routines
+ 95+  C52B              LFTQ equ 0x00F6 ; Gives number of bytes in queue
+ 96+  C52B              PUTQ equ 0x00F9 ; Put byte in queue
+ 97+  C52B
+ 98+  C52B              ; Graphic routines
+ 99+  C52B              ;More info (MSX Assembly Page): http:;map.grauw.nl/resources/msxbios.php
+100+  C52B              RIGHTC equ 0x00FC ; Shifts screenpixel to the right
+101+  C52B              LEFTC  equ 0x00FF ; Shifts screenpixel to the left
+102+  C52B              UPC    equ 0x0102 ; Shifts screenpixel up
+103+  C52B              TUPC   equ 0x0105 ; Tests whether UPC is possible, if possible, execute UPC
+104+  C52B              DOWNC  equ 0x0108 ; Shifts screenpixel down
+105+  C52B              TDOWNC equ 0x010B ; Tests whether DOWNC is possible, if possible, execute DOWNC
+106+  C52B              SCALXY equ 0x010E ; Scales X and Y coordinates
+107+  C52B              MAPXY  equ 0x0111 ; Places cursor at current cursor address
+108+  C52B              FETCHC equ 0x0114 ; Gets current cursor addresses mask pattern
+109+  C52B              STOREC equ 0x0117 ; Record current cursor addresses mask pattern
+110+  C52B              SETATR equ 0x011A ; Set attribute byte
+111+  C52B              READC  equ 0x011E ; Reads attribute byte of current screenpixel
+112+  C52B              SETC   equ 0x0120 ; Returns currenct screenpixel of specificed attribute byte
+113+  C52B              NSETCX equ 0x0123 ; Set horizontal screenpixels
+114+  C52B              GTASPC equ 0x0126 ; Gets screen relations
+115+  C52B              PNTINI equ 0x0129 ; Initalises the PAINT instruction
+116+  C52B              SCANR  equ 0x012C ; Scans screenpixels to the right
+117+  C52B              SCANL  equ 0x012F ; Scans screenpixels to the left
+118+  C52B
+119+  C52B              ; Graphic routines MSX2
+120+  C52B              ;More info (MSX Assembly Page): http:;map.grauw.nl/resources/msxbios.php#msx2bios
+121+  C52B              CHKNEW equ 0x0165 ;Tests screen mode > C-flag set if screenmode = 5, 6, 7 or 8
+122+  C52B              BIGFIL equ 0x016B ;fill VRAM with value (total VRAM can be reached) HL address, BC length, A data
+123+  C52B              NSETRD equ 0x016E ;Enable VDP to read.(with full 16 bits VRAM-address)
+124+  C52B              NSTWRT equ 0x0171 ;Enable VDP to write.(with full 16 bits VRAM-address)
+125+  C52B              NRDVRM equ 0x0174 ;Reads VRAM like in RDVRM.(with full 16 bits VRAM-address)
+126+  C52B              NWRVRM equ 0x0177 ;Writes to VRAM like in WRTVRM.(with full 16 bits VRAM-address)
+127+  C52B
+128+  C52B
+129+  C52B              ; Misc routines
+130+  C52B              CHGCAP equ 0x0132 ; Alternates the CAP lamp status
+131+  C52B              CHGSND equ 0x0135 ; Alternates the 1-bit sound port status
+132+  C52B              RSLREG equ 0x0138 ; Reads the primary slot register
+133+  C52B              WSLREG equ 0x013B ; Writes value to the primary slot register
+134+  C52B              RDVDP  equ 0x013E ; Reads VDP status register
+135+  C52B              SNSMAT equ 0x0141 ; Returns the value of the specified line from the keyboard matrix
+136+  C52B              ; 0   1          2           3           4           5           6           7           8       9       10
+137+  C52B              ;0    1          2                      4           5           6
+138+  C52B              ;1   ; fin grabr ' grabar                                                    Ñ
+139+  C52B              ;2                                      \grabar2  DEADfingrabar2 A           B
+140+  C52B              ;3 C                        F           G           H
+141+  C52B              ;4                          N
+142+  C52B              ;5 S                        V                       X                       Z
+143+  C52B              ;6SHIFtONTROL    GRAPH      CAPS        CODE
+144+  C52B              ;7              ESCAPE                              BS                      RET
+145+  C52B              ;8                                               Cursor ^    Cursor v
+146+  C52B              PHYDIO equ 0x0144 ; Executes I/O for mass-storage media like diskettes
+147+  C52B              FORMAT equ 0x0147 ; Initialises mass-storage media like formatting of diskettes
+148+  C52B              ISFLIO equ 0x014A ; Tests if I/O to device is taking place
+149+  C52B              OUTDLP equ 0x014E ; Printer output
+150+  C52B              GETVCP equ 0x0150 ; Returns pointer to play queue
+151+  C52B              GETVC2 equ 0x0153 ; Returns pointer to variable in queue number VOICEN (byte op #FB38)
+152+  C52B              KILBUF equ 0x0156 ; Clear keyboard buffer
+153+  C52B              CALBAS equ 0x0159 ; Executes inter-slot call to the routine in BASIC interpreter
+154+  C52B
+155+  C52B
+# file closed: src/vars_msxBios.asm
+562   C52B
+563   C52B
+564   C52B
+565   C52B
+566   C52B
+567   C52B
+568   C52B
+569   C52B              FINAL:
+# file closed: src/main.asm

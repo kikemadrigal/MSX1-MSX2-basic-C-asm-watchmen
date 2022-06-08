@@ -1,0 +1,148 @@
+Sjasm Z80 Assembler v0.42c - www.xl2s.tk             [2021.04.23 - 05:06:08]
+
+asm/sprites.asm
+Errors: 0
+
+       1   00:0000                        
+       2   00:0000                              output "sprites.bin"
+       3   00:D000                      
+       4   00:D000  FE                      db   #fe               ; ID archivo binario, siempre hay que poner el mismo -1FEh
+       5   00:D001  00 D0                   dw   INICIO            ; dirección de inicio
+       6   00:D003  A0 D1                   dw   FINAL - 1         ; dirección final
+       7   00:D005  00 D0                   dw   INICIO             ; dircción del programa de ejecución (para cuando pongas r en bload"nombre_programa", r)
+       8   00:D007                      
+       9   00:D007                          org #d000 ; o 57344, org se utiliza para decirle al z80 en que posición de memoria RAM empieza nuestro programa en ensamblador
+      10   00:D000                      
+      11   00:D000                      INICIO:
+      12   00:D000  C9                      ret ; el ret es necesario para que vuelva al basic
+      13   00:D001                      sprites:
+      14   00:D001                          db 0x0F,0x0F,0x7F,0x07,0x04,0x04,0x1F,0x1F
+      14   00:D001  0F 0F 7F 07 04 04 1F 1F 
+      15   00:D009                          db 0x1F,0x1F,0x03,0x0F,0x06,0x18,0x07,0x0F
+      15   00:D009  1F 1F 03 0F 06 18 07 0F 
+      16   00:D011                          db 0xF0,0xF0,0xFE,0xF8,0x14,0xE6,0xEE,0xEC
+      16   00:D011  F0 F0 FE F8 14 E6 EE EC 
+      17   00:D019                          db 0xEC,0xC0,0xE0,0xF0,0x78,0xF8,0x1C,0x3C
+      17   00:D019  EC C0 E0 F0 78 F8 1C 3C 
+      18   00:D021                          db 0x0F,0x0F,0x7F,0x07,0x04,0x04,0x1F,0x1F
+      18   00:D021  0F 0F 7F 07 04 04 1F 1F 
+      19   00:D029                          db 0x1F,0x1F,0x03,0x0F,0x06,0x18,0x07,0x0F
+      19   00:D029  1F 1F 03 0F 06 18 07 0F 
+      20   00:D031                          db 0xF0,0xF0,0xFE,0xF8,0x14,0xE6,0xEE,0xEC
+      20   00:D031  F0 F0 FE F8 14 E6 EE EC 
+      21   00:D039                          db 0xEC,0xC0,0xE0,0xF0,0x78,0xF8,0xC0,0xC0
+      21   00:D039  EC C0 E0 F0 78 F8 C0 C0 
+      22   00:D041                          db 0x0F,0x0F,0x7F,0x1F,0x28,0x67,0x77,0x37
+      22   00:D041  0F 0F 7F 1F 28 67 77 37 
+      23   00:D049                          db 0x37,0x03,0x07,0x0F,0x1E,0x1F,0x38,0x3C
+      23   00:D049  37 03 07 0F 1E 1F 38 3C 
+      24   00:D051                          db 0xF0,0xF0,0xFE,0xE0,0x20,0x20,0xF8,0xF8
+      24   00:D051  F0 F0 FE E0 20 20 F8 F8 
+      25   00:D059                          db 0xF8,0xF8,0xC0,0xF0,0x60,0x18,0xE0,0xF0
+      25   00:D059  F8 F8 C0 F0 60 18 E0 F0 
+      26   00:D061                          db 0x0F,0x0F,0x7F,0x1F,0x28,0x67,0x77,0x37
+      26   00:D061  0F 0F 7F 1F 28 67 77 37 
+      27   00:D069                          db 0x37,0x03,0x07,0x0F,0x1E,0x1F,0x03,0x03
+      27   00:D069  37 03 07 0F 1E 1F 03 03 
+      28   00:D071                          db 0xF0,0xF0,0xFE,0xE0,0x20,0x20,0xF8,0xF8
+      28   00:D071  F0 F0 FE E0 20 20 F8 F8 
+      29   00:D079                          db 0xF8,0xF8,0xC0,0xF0,0x60,0x18,0xE0,0xF0
+      29   00:D079  F8 F8 C0 F0 60 18 E0 F0 
+      30   00:D081                          db 0x0F,0x0F,0x7F,0x07,0x07,0x0F,0x0F,0x0F
+      30   00:D081  0F 0F 7F 07 07 0F 0F 0F 
+      31   00:D089                          db 0x03,0x0B,0x0F,0x0F,0x07,0x07,0x03,0x07
+      31   00:D089  03 0B 0F 0F 07 07 03 07 
+      32   00:D091                          db 0xF0,0xF0,0xFE,0xE0,0xE0,0xF0,0xF0,0xF0
+      32   00:D091  F0 F0 FE E0 E0 F0 F0 F0 
+      33   00:D099                          db 0xC0,0xD0,0xF0,0xF0,0xE0,0xE0,0xC0,0xE0
+      33   00:D099  C0 D0 F0 F0 E0 E0 C0 E0 
+      34   00:D0A1                          db 0x0F,0x0F,0x7F,0x07,0x07,0x0F,0x07,0x07
+      34   00:D0A1  0F 0F 7F 07 07 0F 07 07 
+      35   00:D0A9                          db 0x03,0x03,0x07,0x0F,0x07,0x07,0x03,0x03
+      35   00:D0A9  03 03 07 0F 07 07 03 03 
+      36   00:D0B1                          db 0xF0,0xF0,0xFE,0xE0,0xE0,0xF0,0xE0,0xE0
+      36   00:D0B1  F0 F0 FE E0 E0 F0 E0 E0 
+      37   00:D0B9                          db 0xC0,0xC0,0xE0,0xF0,0xE0,0xE0,0xC0,0xC0
+      37   00:D0B9  C0 C0 E0 F0 E0 E0 C0 C0 
+      38   00:D0C1                          db 0x0F,0x0F,0x7F,0x07,0x04,0x04,0x1F,0x1F
+      38   00:D0C1  0F 0F 7F 07 04 04 1F 1F 
+      39   00:D0C9                          db 0x0F,0x17,0x0B,0x07,0x01,0x00,0x00,0x00
+      39   00:D0C9  0F 17 0B 07 01 00 00 00 
+      40   00:D0D1                          db 0xF0,0xF0,0xFE,0xC0,0x70,0xF0,0xF0,0xF0
+      40   00:D0D1  F0 F0 FE C0 70 F0 F0 F0 
+      41   00:D0D9                          db 0xE0,0xC0,0xE0,0xF0,0xF8,0xF8,0x1C,0x3C
+      41   00:D0D9  E0 C0 E0 F0 F8 F8 1C 3C 
+      42   00:D0E1                          db 0x0F,0x0F,0x7F,0x03,0x0E,0x0F,0x0F,0x0F
+      42   00:D0E1  0F 0F 7F 03 0E 0F 0F 0F 
+      43   00:D0E9                          db 0x07,0x03,0x07,0x0F,0x1F,0x1F,0x38,0x3C
+      43   00:D0E9  07 03 07 0F 1F 1F 38 3C 
+      44   00:D0F1                          db 0xF0,0xF0,0xFE,0xE0,0x20,0x20,0xF8,0xF8
+      44   00:D0F1  F0 F0 FE E0 20 20 F8 F8 
+      45   00:D0F9                          db 0xF0,0xE8,0xD0,0xE0,0x80,0x00,0x00,0x00
+      45   00:D0F9  F0 E8 D0 E0 80 00 00 00 
+      46   00:D101                          db 0x03,0x07,0x07,0x07,0x3F,0x7F,0x73,0x79
+      46   00:D101  03 07 07 07 3F 7F 73 79 
+      47   00:D109                          db 0x78,0x7F,0x3F,0x3E,0x06,0x0C,0x08,0x0C
+      47   00:D109  78 7F 3F 3E 06 0C 08 0C 
+      48   00:D111                          db 0xC0,0xE0,0xA0,0xE0,0x20,0xE0,0x80,0xF0
+      48   00:D111  C0 E0 A0 E0 20 E0 80 F0 
+      49   00:D119                          db 0x10,0xF0,0xE0,0x40,0x40,0x60,0x30,0x00
+      49   00:D119  10 F0 E0 40 40 60 30 00 
+      50   00:D121                          db 0x00,0x03,0x07,0x07,0x07,0x3F,0x7F,0x7B
+      50   00:D121  00 03 07 07 07 3F 7F 7B 
+      51   00:D129                          db 0x79,0x78,0x7F,0x3F,0x3E,0x06,0x02,0x03
+      51   00:D129  79 78 7F 3F 3E 06 02 03 
+      52   00:D131                          db 0x00,0xC0,0xE0,0xA0,0xE0,0x20,0xE0,0xE0
+      52   00:D131  00 C0 E0 A0 E0 20 E0 E0 
+      53   00:D139                          db 0xE0,0x30,0xF0,0xE0,0x40,0x40,0x40,0x60
+      53   00:D139  E0 30 F0 E0 40 40 40 60 
+      54   00:D141                          db 0x03,0x07,0x05,0x07,0x04,0x07,0x01,0x0F
+      54   00:D141  03 07 05 07 04 07 01 0F 
+      55   00:D149                          db 0x08,0x0F,0x07,0x02,0x02,0x06,0x0C,0x00
+      55   00:D149  08 0F 07 02 02 06 0C 00 
+      56   00:D151                          db 0xC0,0xE0,0xE0,0xE0,0xFC,0xFE,0xCE,0x9E
+      56   00:D151  C0 E0 E0 E0 FC FE CE 9E 
+      57   00:D159                          db 0x1E,0xFE,0xFC,0x7C,0x60,0x30,0x10,0x30
+      57   00:D159  1E FE FC 7C 60 30 10 30 
+      58   00:D161                          db 0x00,0x03,0x07,0x05,0x07,0x04,0x07,0x07
+      58   00:D161  00 03 07 05 07 04 07 07 
+      59   00:D169                          db 0x07,0x0C,0x0F,0x07,0x02,0x02,0x02,0x06
+      59   00:D169  07 0C 0F 07 02 02 02 06 
+      60   00:D171                          db 0x00,0xC0,0xE0,0xE0,0xE0,0xFC,0xFE,0xDE
+      60   00:D171  00 C0 E0 E0 E0 FC FE DE 
+      61   00:D179                          db 0x9E,0x1E,0xFE,0xFC,0x7C,0x60,0x40,0xC0
+      61   00:D179  9E 1E FE FC 7C 60 40 C0 
+      62   00:D181                          db 0x02,0x1C,0x7A,0x78,0x7E,0x3E,0x38,0x26
+      62   00:D181  02 1C 7A 78 7E 3E 38 26 
+      63   00:D189                          db 0x10,0x2C,0x27,0x30,0x18,0x1F,0x0C,0x07
+      63   00:D189  10 2C 27 30 18 1F 0C 07 
+      64   00:D191                          db 0x80,0x18,0xBE,0x1E,0xAE,0xAC,0x1A,0xB6
+      64   00:D191  80 18 BE 1E AE AC 1A B6 
+      65   00:D199                          db 0x0A,0x1A,0xE4,0x08,0x34,0xEC,0x18,0xF0 
+      65   00:D199  0A 1A E4 08 34 EC 18 F0 
+      66   00:D1A1                      
+      67   00:D1A1                      FINAL:
+
+    LABELS
+-------------------------------------------------
+00:0000D000   INICIO
+00:0000D001 X sprites
+00:0000D1A1   FINAL
+
+
+ Output: asm/sprites.out
+-------------------------------------------------
+
+ Page: 00
+  Org: 0000D000  Size: *  Used: 00000000
+
+    No output
+
+ Output: sprites.bin
+-------------------------------------------------
+
+ Page: 00
+  Org: 0000D000  Size: *  Used: 000001A8
+
+   Address   Length Align   Label
+   0000D000     424         INICIO

@@ -1,0 +1,124 @@
+Sjasm Z80 Assembler v0.42c - www.xl2s.tk             [2021.04.23 - 05:06:08]
+
+asm/world1.asm
+Errors: 7
+
+       1   00:0000                        
+       2   00:0000                              output "world1.bin"
+       3   00:D000                      
+       4   00:D000  FE                      db   #fe               ; ID archivo binario, siempre hay que poner el mismo -1FEh
+       5   00:D001  00 D0                   dw   INICIO            ; dirección de inicio
+       6   00:D003  E0 D2                   dw   FINAL - 1         ; dirección final
+       7   00:D005  00 D0                   dw   INICIO             ; dircción del programa de ejecución (para cuando pongas r en bload"nombre_programa", r)
+       8   00:D007                      
+       9   00:D007                          org #d000 ; o 57344, org se utiliza para decirle al z80 en que posición de memoria RAM empieza nuestro programa en ensamblador
+      10   00:D000                      
+      11   00:D000                      INICIO:
+      12   00:D000  C9                      ret ; el ret es necesario para que vuelva al basic
+      13   00:D001                      level0:
+      14   00:D001                          ;200 tiles de ancho x 23 de alto, dejamos 3 tiles en la parte de debajo para el marcador
+      15   00:D001                      
+      16   00:D001                          db 226,226,226,226,226,226,226,226,226,226,226,226,226,226,226,226,226,226,226,226,226,226,226,226,226,226,226,226,226,226,226,227
+      16   00:D001  E2 E2 E2 E2 E2 E2 E2 E2 E2 E2 E2 E2 E2 E2 E2 E2 
+      16   00:D011  E2 E2 E2 E2 E2 E2 E2 E2 E2 E2 E2 E2 E2 E2 E2 E3 
+      17   00:D021                          db 226,226,-1,-1,-1,-1,-1,-1,-1,39,-1,-1,-1,-1,0,1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,8,9,-1,-1,226,227
+      17   00:D021  E2 E2 FF FF FF FF FF FF FF 27 FF FF FF FF 00 01 
+      17   00:D031  FF FF FF FF FF FF FF FF FF FF 08 09 FF FF E2 E3 
+      18   00:D041                          db 226,226,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,32,33,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,40,41,-1,-1,226,226
+      18   00:D041  E2 E2 FF FF FF FF FF FF FF FF FF FF FF FF 20 21 
+      18   00:D051  FF FF FF FF FF FF FF FF FF FF 28 29 FF FF E2 E2 
+      19   00:D061                          db 226,226,224,224,224,224,-1,-1,224,224,224,224,224,224,224,224,224,224,224,-1,-1,224,224,192,193,224,224,224,224,224,224,224
+      19   00:D061  E2 E2 E0 E0 E0 E0 FF FF E0 E0 E0 E0 E0 E0 E0 E0 
+      19   00:D071  E0 E0 E0 FF FF E0 E0 C0 C1 E0 E0 E0 E0 E0 E0 E0 
+asm/world1.asm(20) : Value out of range
+      20   00:D081                          db 226,227,100,101,258,-1,-1,-1,8,9,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,192,193,-1,-1,-1,-1,-1,226,227
+      20   00:D081  E2 E3 64 65 02 FF FF FF 08 09 FF FF FF FF FF FF 
+      20   00:D091  FF FF FF FF FF FF FF C0 C1 FF FF FF FF FF E2 E3 
+asm/world1.asm(21) : Value out of range
+      21   00:D0A1                          db 226,227,132,133,258,-1,-1,-1,40,41,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,192,193,-1,-1,-1,-1,-1,226,227
+      21   00:D0A1  E2 E3 84 85 02 FF FF FF 28 29 FF FF FF FF FF FF 
+      21   00:D0B1  FF FF FF FF FF FF FF C0 C1 FF FF FF FF FF E2 E3 
+asm/world1.asm(22) : Value out of range
+      22   00:D0C1                          db 227,227,164,165,258,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,192,193,-1,-1,-1,-1,-1,226,227
+      22   00:D0C1  E3 E3 A4 A5 02 FF FF FF FF FF FF FF FF FF FF FF 
+      22   00:D0D1  FF FF FF FF FF FF FF C0 C1 FF FF FF FF FF E2 E3 
+      23   00:D0E1                          db 225,225,225,225,225,225,225,225,225,225,225,-1,-1,225,225,225,192,193,225,225,225,-1,-1,225,225,225,225,225,225,225,225,225
+      23   00:D0E1  E1 E1 E1 E1 E1 E1 E1 E1 E1 E1 E1 FF FF E1 E1 E1 
+      23   00:D0F1  C0 C1 E1 E1 E1 FF FF E1 E1 E1 E1 E1 E1 E1 E1 E1 
+asm/world1.asm(24) : Value out of range
+      24   00:D101                          db 226,227,-1,-1,8,9,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,192,193,-1,-1,-1,-1,258,-1,8,9,-1,-1,-1,-1,226,227
+      24   00:D101  E2 E3 FF FF 08 09 FF FF FF FF FF FF FF FF FF FF 
+      24   00:D111  C0 C1 FF FF FF FF 02 FF 08 09 FF FF FF FF E2 E3 
+asm/world1.asm(25) : Value out of range
+      25   00:D121                          db 226,227,-1,-1,40,41,-1,-1,-1,39,-1,-1,-1,-1,-1,-1,192,193,-1,-1,39,-1,258,-1,40,41,-1,-1,-1,-1,226,227
+      25   00:D121  E2 E3 FF FF 28 29 FF FF FF 27 FF FF FF FF FF FF 
+      25   00:D131  C0 C1 FF FF 27 FF 02 FF 28 29 FF FF FF FF E2 E3 
+asm/world1.asm(26) : Value out of range
+      26   00:D141                          db 226,227,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,192,193,-1,-1,0,1,258,-1,-1,-1,-1,-1,128,129,226,227
+      26   00:D141  E2 E3 FF FF FF FF FF FF FF FF FF FF FF FF FF FF 
+      26   00:D151  C0 C1 FF FF 00 01 02 FF FF FF FF FF 80 81 E2 E3 
+asm/world1.asm(27) : Value out of range
+      27   00:D161                          db 226,227,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,192,193,-1,-1,32,33,258,-1,-1,-1,-1,-1,160,161,226,227
+      27   00:D161  E2 E3 FF FF FF FF FF FF FF FF FF FF FF FF FF FF 
+      27   00:D171  C0 C1 FF FF 20 21 02 FF FF FF FF FF A0 A1 E2 E3 
+      28   00:D181                          db 224,224,224,224,224,224,224,224,224,224,224,224,-1,-1,224,224,192,193,224,224,224,224,224,224,-1,-1,224,192,193,224,224,224
+      28   00:D181  E0 E0 E0 E0 E0 E0 E0 E0 E0 E0 E0 E0 FF FF E0 E0 
+      28   00:D191  C0 C1 E0 E0 E0 E0 E0 E0 FF FF E0 C0 C1 E0 E0 E0 
+      29   00:D1A1                          db 226,227,-1,-1,-1,-1,-1,8,9,-1,-1,-1,-1,-1,-1,-1,192,193,-1,-1,-1,-1,-1,-1,-1,-1,-1,192,193,-1,226,227
+      29   00:D1A1  E2 E3 FF FF FF FF FF 08 09 FF FF FF FF FF FF FF 
+      29   00:D1B1  C0 C1 FF FF FF FF FF FF FF FF FF C0 C1 FF E2 E3 
+      30   00:D1C1                          db 226,227,-1,-1,-1,-1,-1,40,41,-1,-1,-1,-1,-1,-1,-1,192,193,-1,-1,-1,-1,-1,-1,-1,-1,-1,192,193,-1,226,227
+      30   00:D1C1  E2 E3 FF FF FF FF FF 28 29 FF FF FF FF FF FF FF 
+      30   00:D1D1  C0 C1 FF FF FF FF FF FF FF FF FF C0 C1 FF E2 E3 
+      31   00:D1E1                          db 226,227,-1,-1,-1,-1,0,1,-1,-1,-1,-1,-1,-1,-1,-1,192,193,-1,-1,-1,-1,-1,39,-1,-1,-1,192,193,-1,226,227
+      31   00:D1E1  E2 E3 FF FF FF FF 00 01 FF FF FF FF FF FF FF FF 
+      31   00:D1F1  C0 C1 FF FF FF FF FF 27 FF FF FF C0 C1 FF E2 E3 
+      32   00:D201                          db 226,227,-1,-1,-1,-1,32,33,-1,-1,-1,-1,-1,-1,-1,-1,192,193,-1,-1,-1,-1,-1,-1,-1,-1,-1,32,33,-1,226,227
+      32   00:D201  E2 E3 FF FF FF FF 20 21 FF FF FF FF FF FF FF FF 
+      32   00:D211  C0 C1 FF FF FF FF FF FF FF FF FF 20 21 FF E2 E3 
+      33   00:D221                          db 224,225,224,224,192,193,225,225,225,-1,-1,225,225,225,225,225,225,225,225,-1,-1,225,225,225,192,193,225,225,225,225,225,225
+      33   00:D221  E0 E1 E0 E0 C0 C1 E1 E1 E1 FF FF E1 E1 E1 E1 E1 
+      33   00:D231  E1 E1 E1 FF FF E1 E1 E1 C0 C1 E1 E1 E1 E1 E1 E1 
+      34   00:D241                          db 226,227,-1,-1,192,193,-1,-1,-1,-1,-1,-1,-1,-1,8,9,-1,-1,-1,-1,-1,-1,-1,-1,192,193,-1,-1,8,9,226,227
+      34   00:D241  E2 E3 FF FF C0 C1 FF FF FF FF FF FF FF FF 08 09 
+      34   00:D251  FF FF FF FF FF FF FF FF C0 C1 FF FF 08 09 E2 E3 
+      35   00:D261                          db 226,227,-1,-1,192,193,-1,-1,39,-1,-1,-1,-1,-1,40,41,-1,-1,-1,-1,-1,-1,-1,-1,192,193,-1,-1,40,41,226,227
+      35   00:D261  E2 E3 FF FF C0 C1 FF FF 27 FF FF FF FF FF 28 29 
+      35   00:D271  FF FF FF FF FF FF FF FF C0 C1 FF FF 28 29 E2 E3 
+      36   00:D281                          db 226,227,-1,-1,192,193,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,0,1,-1,-1,-1,-1,-1,192,193,-1,-1,-1,-1,226,227
+      36   00:D281  E2 E3 FF FF C0 C1 FF FF FF FF FF FF FF FF FF FF 
+      36   00:D291  FF 00 01 FF FF FF FF FF C0 C1 FF FF FF FF E2 E3 
+      37   00:D2A1                          db 226,227,-1,-1,192,193,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,32,33,-1,-1,-1,-1,-1,192,193,-1,-1,-1,-1,226,227
+      37   00:D2A1  E2 E3 FF FF C0 C1 FF FF FF FF FF FF FF FF FF FF 
+      37   00:D2B1  FF 20 21 FF FF FF FF FF C0 C1 FF FF FF FF E2 E3 
+      38   00:D2C1                          db 224,224,224,224,224,224,224,224,224,224,224,224,224,224,224,224,224,224,224,224,224,224,224,224,224,224,224,224,224,224,224,224
+      38   00:D2C1  E0 E0 E0 E0 E0 E0 E0 E0 E0 E0 E0 E0 E0 E0 E0 E0 
+      38   00:D2D1  E0 E0 E0 E0 E0 E0 E0 E0 E0 E0 E0 E0 E0 E0 E0 E0 
+      39   00:D2E1                      
+      40   00:D2E1                      
+      41   00:D2E1                      
+      42   00:D2E1                      FINAL:
+
+    LABELS
+-------------------------------------------------
+00:0000D000   INICIO
+00:0000D001 X level0
+00:0000D2E1   FINAL
+
+
+ Output: asm/world1.out
+-------------------------------------------------
+
+ Page: 00
+  Org: 0000D000  Size: *  Used: 00000000
+
+    No output
+
+ Output: world1.bin
+-------------------------------------------------
+
+ Page: 00
+  Org: 0000D000  Size: *  Used: 000002E8
+
+   Address   Length Align   Label
+   0000D000     744         INICIO

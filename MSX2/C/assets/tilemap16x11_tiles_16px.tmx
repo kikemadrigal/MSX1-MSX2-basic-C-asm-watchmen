@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<map version="1.2" tiledversion="2019.12.11" orientation="orthogonal" renderorder="right-down" compressionlevel="-1" width="16" height="11" tilewidth="16" tileheight="16" infinite="0" nextlayerid="2" nextobjectid="1">
+ <editorsettings>
+  <export target="tilemap_16x11.csv" format="csv"/>
+ </editorsettings>
+ <tileset firstgid="1" source="tileset.tsx"/>
+ <layer id="1" name="Capa de patrones 1" width="16" height="11">
+  <data encoding="csv">
+17,4,4,4,4,17,4,4,4,4,4,4,4,4,4,2,
+3,2,3,3,3,3,3,3,3,2,3,3,3,4,3,3,
+4,2,4,4,4,4,4,4,4,2,4,4,4,4,4,4,
+17,2,4,4,4,4,4,4,4,2,4,4,4,4,17,4,
+2,3,4,4,3,2,3,3,3,3,4,4,3,3,3,3,
+2,4,4,4,4,2,4,4,4,4,4,4,4,4,4,4,
+2,4,4,4,4,2,4,4,4,4,4,4,4,4,4,4,
+2,4,4,4,4,2,4,4,4,4,4,4,4,4,4,4,
+3,3,2,3,3,3,3,3,4,4,3,3,3,3,3,2,
+4,4,2,4,4,4,4,4,4,4,4,4,4,4,4,2,
+17,4,2,4,4,4,4,4,4,4,17,4,4,4,4,2
+</data>
+ </layer>
+</map>

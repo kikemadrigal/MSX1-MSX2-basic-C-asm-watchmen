@@ -1,0 +1,5 @@
+FINAL: equ 0C01BH
+INICIO: equ 0C000H
+MAIN: equ 0C000H
+leer_mensaje: equ 0C008H
+mensaje: equ 0C012H

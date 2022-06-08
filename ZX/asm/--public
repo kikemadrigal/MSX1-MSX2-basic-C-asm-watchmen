@@ -1,0 +1,4 @@
+fin		EQU 0800BH
+loop		EQU 0800DH
+main		EQU 08000H
+nextscan	EQU 08017H

@@ -1,0 +1,117 @@
+Sjasm Z80 Assembler v0.42c - www.xl2s.tk             [2020.11.26 - 19:00:26]
+
+src/world0.asm
+Errors: 0
+
+       1   00:0000                              output "world0.bin"
+       2   00:D000                      
+       3   00:D000  FE                      db   #fe               ; ID archivo binario, siempre hay que poner el mismo 0FEh
+       4   00:D001  00 D0                   dw   INICIO            ; dirección de inicio
+       5   00:D003  00 D3                   dw   FINAL - 1         ; dirección final
+       6   00:D005  00 D0                   dw   INICIO             ; dircción del programa de ejecución (para cuando pongas r en bload"nombre_programa", r)
+       7   00:D007                      
+       8   00:D007                          org #d000 ; o 57344, org se utiliza para decirle al z80 en que posición de memoria RAM empieza nuestro programa en ensamblador
+       9   00:D000                      
+      10   00:D000                      INICIO:
+      11   00:D000  C9                      ret ; el ret es necesario para que vuelva al basic
+      12   00:D001                      level1:
+      13   00:D001                          db 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,0
+      13   00:D001  00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 
+      13   00:D011  00 00 00 00 00 00 00 00 00 00 00 00 00 01 00 00 
+      14   00:D021                          db 0,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,1,-1,0
+      14   00:D021  00 FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF 
+      14   00:D031  FF FF FF FF FF FF FF FF FF FF FF FF FF 01 FF 00 
+      15   00:D041                          db 0,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,1,-1,0
+      15   00:D041  00 FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF 
+      15   00:D051  FF FF FF FF FF FF FF FF FF FF FF FF FF 01 FF 00 
+      16   00:D061                          db 0,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,1,-1,0
+      16   00:D061  00 FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF 
+      16   00:D071  FF FF FF FF FF FF FF FF FF FF FF FF FF 01 FF 00 
+      17   00:D081                          db 0,0,1,0,0,0,0,0,0,0,-1,-1,-1,0,0,0,0,0,0,1,0,0,0,0,-1,-1,-1,0,0,0,0,0
+      17   00:D081  00 00 01 00 00 00 00 00 00 00 FF FF FF 00 00 00 
+      17   00:D091  00 00 00 01 00 00 00 00 FF FF FF 00 00 00 00 00 
+      18   00:D0A1                          db 0,-1,1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,0
+      18   00:D0A1  00 FF 01 FF FF FF FF FF FF FF FF FF FF FF FF FF 
+      18   00:D0B1  FF FF FF 01 FF FF FF FF FF FF FF FF FF FF FF 00 
+      19   00:D0C1                          db 0,-1,1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,0
+      19   00:D0C1  00 FF 01 FF FF FF FF FF FF FF FF FF FF FF FF FF 
+      19   00:D0D1  FF FF FF 01 FF FF FF FF FF FF FF FF FF FF FF 00 
+      20   00:D0E1                          db 0,-1,1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,0
+      20   00:D0E1  00 FF 01 FF FF FF FF FF FF FF FF FF FF FF FF FF 
+      20   00:D0F1  FF FF FF 01 FF FF FF FF FF FF FF FF FF FF FF 00 
+      21   00:D101                          db 0,-1,1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,0
+      21   00:D101  00 FF 01 FF FF FF FF FF FF FF FF FF FF FF FF FF 
+      21   00:D111  FF FF FF 01 FF FF FF FF FF FF FF FF FF FF FF 00 
+      22   00:D121                          db 0,0,0,0,0,0,0,0,0,0,0,0,1,0,-1,-1,-1,0,0,0,0,0,0,0,0,-1,-1,0,0,0,-1,0
+      22   00:D121  00 00 00 00 00 00 00 00 00 00 00 00 01 00 FF FF 
+      22   00:D131  FF 00 00 00 00 00 00 00 00 FF FF 00 00 00 FF 00 
+      23   00:D141                          db 0,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,0
+      23   00:D141  00 FF FF FF FF FF FF FF FF FF FF FF 01 FF FF FF 
+      23   00:D151  FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF 00 
+      24   00:D161                          db 0,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,0
+      24   00:D161  00 FF FF FF FF FF FF FF FF FF FF FF 01 FF FF FF 
+      24   00:D171  FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF 00 
+      25   00:D181                          db 0,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,0
+      25   00:D181  00 FF FF FF FF FF FF FF FF FF FF FF 01 FF FF FF 
+      25   00:D191  FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF 00 
+      26   00:D1A1                          db 0,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,0
+      26   00:D1A1  00 FF FF FF FF FF FF FF FF FF FF FF 01 FF FF FF 
+      26   00:D1B1  FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF 00 
+      27   00:D1C1                          db 0,2,2,0,0,0,-1,-1,0,0,0,0,0,0,0,0,0,0,0,-1,-1,-1,0,0,0,0,2,2,0,0,-1,0
+      27   00:D1C1  00 02 02 00 00 00 FF FF 00 00 00 00 00 00 00 00 
+      27   00:D1D1  00 00 00 FF FF FF 00 00 00 00 02 02 00 00 FF 00 
+      28   00:D1E1                          db 0,2,2,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,2,2,-1,-1,-1,0
+      28   00:D1E1  00 02 02 FF FF FF FF FF FF FF FF FF FF FF FF FF 
+      28   00:D1F1  FF FF FF FF FF FF FF FF FF FF 02 02 FF FF FF 00 
+      29   00:D201                          db 0,2,2,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,2,2,-1,-1,-1,0
+      29   00:D201  00 02 02 FF FF FF FF FF FF FF FF FF FF FF FF FF 
+      29   00:D211  FF FF FF FF FF FF FF FF FF FF 02 02 FF FF FF 00 
+      30   00:D221                          db 0,2,2,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,2,2,-1,-1,-1,0
+      30   00:D221  00 02 02 FF FF FF FF FF FF FF FF FF FF FF FF FF 
+      30   00:D231  FF FF FF FF FF FF FF FF FF FF 02 02 FF FF FF 00 
+      31   00:D241                          db 0,0,0,0,0,0,0,2,2,0,0,-1,-1,-1,0,0,0,0,-1,-1,0,2,2,0,0,0,0,0,0,0,0,0
+      31   00:D241  00 00 00 00 00 00 00 02 02 00 00 FF FF FF 00 00 
+      31   00:D251  00 00 FF FF 00 02 02 00 00 00 00 00 00 00 00 00 
+      32   00:D261                          db 0,-1,-1,-1,-1,-1,-1,2,2,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,2,2,-1,-1,-1,-1,-1,-1,-1,-1,0
+      32   00:D261  00 FF FF FF FF FF FF 02 02 FF FF FF FF FF FF FF 
+      32   00:D271  FF FF FF FF FF 02 02 FF FF FF FF FF FF FF FF 00 
+      33   00:D281                          db 0,-1,-1,-1,-1,-1,-1,2,2,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,2,2,-1,-1,-1,-1,-1,-1,-1,-1,0
+      33   00:D281  00 FF FF FF FF FF FF 02 02 FF FF FF FF FF FF FF 
+      33   00:D291  FF FF FF FF FF 02 02 FF FF FF FF FF FF FF FF 00 
+      34   00:D2A1                          db 0,-1,-1,-1,-1,-1,-1,2,2,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,2,2,-1,-1,-1,-1,-1,-1,-1,-1,0
+      34   00:D2A1  00 FF FF FF FF FF FF 02 02 FF FF FF FF FF FF FF 
+      34   00:D2B1  FF FF FF FF FF 02 02 FF FF FF FF FF FF FF FF 00 
+      35   00:D2C1                          db 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+      35   00:D2C1  00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 
+      35   00:D2D1  00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 
+      36   00:D2E1                          db 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+      36   00:D2E1  00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 
+      36   00:D2F1  00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 
+      37   00:D301                          
+      38   00:D301                      
+      39   00:D301                      
+      40   00:D301                      FINAL:
+
+    LABELS
+-------------------------------------------------
+00:0000D000   INICIO
+00:0000D001 X level1
+00:0000D301   FINAL
+
+
+ Output: src/world0.out
+-------------------------------------------------
+
+ Page: 00
+  Org: 0000D000  Size: *  Used: 00000000
+
+    No output
+
+ Output: world0.bin
+-------------------------------------------------
+
+ Page: 00
+  Org: 0000D000  Size: *  Used: 00000308
+
+   Address   Length Align   Label
+   0000D000     776         INICIO
