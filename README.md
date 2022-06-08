@@ -7,7 +7,7 @@
 
 #### C
 
-https://kikemadrigal.github.io/MSX1-MSX2-basic-watchmen/.?disk=MSX2-C.dsk
+https://kikemadrigal.github.io/MSX1-MSX2-basic-C-asm-watchmen/?disk=MSX2-C.dsk
 
 
 <img src=images/MSX2-C.PNG width=300px/>
@@ -23,7 +23,7 @@ https://kikemadrigal.github.io/MSX1-MSX2-basic-watchmen/.?disk=MSX2-C.dsk
 
 #### Basic 
 
-https://kikemadrigal.github.io/MSX1-MSX2-basic-watchmen/.?disk=MSX2-basic.dsk
+https://kikemadrigal.github.io/MSX1-MSX2-basic-C-asm-watchmen/?disk=MSX2-basic.dsk
 
 
 <img src=images/MSX2-basic.PNG width=300px/>
