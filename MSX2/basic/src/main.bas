@@ -4,7 +4,7 @@
 1 'Level 2=1495-959=536'
 1 'Level 3=1495-355=1140, en esta pantalla los tiles se repiten mucho
 80 defint a-z
-100 print #1,"Cagando mapas 0-9 en array"
+100 print #1,"Cagando mapas 0-5 en array"
 110 ms=0:mm=5:dim m(23,31,mm):gosub 20300
 1'pintamos en la page 2 el level 0
 125 preset(0,196):print #1,"Pintando en la page 2 level 0"

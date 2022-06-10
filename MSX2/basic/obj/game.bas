@@ -1,5 +1,5 @@
 80 defint a-z
-100 print #1,"Cagando mapas 0-9 en array"
+100 print #1,"Cagando mapas 0-5 en array"
 110 ms=0:mm=5:dim m(23,31,mm):gosub 20300
 125 preset(0,196):print #1,"Pintando en la page 2 level 0"
 130 gosub 20500
