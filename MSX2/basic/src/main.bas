@@ -12,19 +12,31 @@
 1'pintamos en la page 2 el level 0
 125 preset(0,196):print #1,"Pintando en la page 2 level 0"
 130 gosub 20500
-1 ' Pintamos el level 0 en la page 0 '
-135 gosub 20100
+
 1 'Inicializamos el personaje'
 140 gosub 5000
 1 'Inicializamos a los enemigos'
 150 gosub 6000
+
+1 'Pantalla de bienvenida'
+370 cls:preset (80,10):print #1,"!The wathmen"
+380 preset (70,20):print #1,"!MSX Murcia 2022"
+390 preset (0,70):print #1,"!Debes de atrapar a los ladores por detras, si los coges por delente te matan"
+400 preset (0,100):print #1,"!Una vez atrapados, tienes que llamar a la policia y se abrira la puerta de salida"
+440 preset (0,130):print #1,"!Segun el ladron que atrapaes obtendras regalos"
+450 preset (0,150):print #1,"!El verde: te proporciona unas botas que te permiten saltar."
+455 preset (0,170):print #1,"!El rojo: te permite empujar bloques para atrapar a los enemigos"
+460 if strig(0)=-1 then goto 470 else goto 460
+ 1 ' Pintamos el level 0 en la page 0 '
+470 gosub 20100
 1 'posicionamos los enemigos según el level'
-160 gosub 10000
+480 gosub 10000
 1 'Rutina barra espaciadora pulsada
-520 strig(0) on:on strig gosub 5200
+500 strig(0) on:on strig gosub 5200
 530 on sprite gosub 5300:sprite on
-1 'Mostramos la información en pantalla'
-540 gosub 2900
+540 gosub 3500
+1 'Mostramos el HUD'
+550 gosub 2900
 1 ' ----------------------'
 1 '      MAIN LOOP
 1 ' ----------------------'
@@ -45,24 +57,16 @@
     
     1'---------------ENEMIGOS------------------
     1 'Update enemigo 1'
-    2090 ex(0)=ex(0)+ev(0):if ex(0)>240 or ex(0)<8 then ev(0)=-ev(0)
-    1 'Update enemigo 2'
-    2100 'ex(1)=ex(1)+ev(1):if ex(1)>240 or ex(1)<0 then ev(1)=-ev(1)
-    1 'Los sprites del enemigo son el 8 y el 9 derecha y el 10 y el 11 izquierda'
-    2105 ec(0)=ec(0)+1:if ec(0)>1 then ec(0)=0
-    2120 if ec(0)=0 then es(0)=8 else es(0)=9
-    2140 if ev(0)>0 then PUT SPRITE 1,(ex(0),ey(0)),eo(0),es(0) else PUT SPRITE 1,(ex(0),ey(0)),eo(0),es(0)+2
-    2160 e5=m((ey(0)/8)-1,(ex(0)/8),ms)
-    2170 if e5<tl(0) then ev(0)=-ev(0)
+    2060 if ec>0 then gosub 6500
     1'---------FIN DE-ENEMIGOS------------------
     
+    1 'El telefono rojo son los tiles 130'
+    2180 if ec=0 then  copy ((130-128)*8,4*8)-(((130-128)*8)+8,(4*8)+8),2 to (ox(0),oy(0)),0,tpset else copy ((128-128)*8,4*8)-(((128-128)*8)+8,(4*8)+8),2 to (ox(0),oy(0)),0,tpset
     
-    
-    
-    2280 if mc=1 then mc=0: ms=ms+1:if ms>mm then preset(40,100):print #1,"game completed":ms=-1:mc=1 else preset(40,100):print #1,"Mission complete!!":gosub 20500:gosub 20100:gosub 10000:gosub 2900
+    2290 if mc=1 then mc=0: ms=ms+1:if ms>mm then preset(40,100):print #1,"game completed":ms=-1:mc=1 else preset(40,100):print #1,"Mission complete!!":gosub 20500:gosub 20100:gosub 10000:gosub 2900
     1 ' marcador'
-    2285 'gosub 2900
-2290 goto 2000
+    2295 'gosub 2900
+2299 goto 2000
 1 ' ----------------------'
 1 '    FINAL MAIN LOOP
 1 ' ----------------------'
@@ -87,27 +91,10 @@
     2400 if re=10 then sound 6,5:sound 8,16:sound 12,6:sound 13,9
 2420 return
 
-1 ' ----------------------'
-1 '     INPUT SYSTEM'
-1 ' ----------------------'
-1 '1 ' 1 Sistema de Input
-1 '    1'1 Arriba, 2 arriba derecha, 3 derecha, 4 abajo derecha, 5 abajo, 6 abajo izquierda, 7 izquierda, 8 izquierda arriba
-1 '    2500 j=stick(0)
-1 '    2520 if j=0 then ps=1
-1 '    2530 if j=3 then px=px+pv:ps=4:if co mod 2=0 then ps=ps+1
-1 '    2540 if j=7 then px=px-pv:ps=6:if co mod 2=0 then ps=ps+1
-1 '    2550 if j=1 then py=py-pv:ps=2:if co mod 2=0 then ps=ps+1
-1 '    2560 if j=5 then py=py+pv:ps=2:if co mod 2=0 then ps=ps+1
-1 '2590 return
 
 1 '2 Sistema de input'
     1 'Nos guardamos las posiciones del player antes de cambiarlas'
     2500 on stick(0) gosub 2700,2500,2600,2500,2800,2500,2640
-    1 'Chequeo escalera-> ver línea 2710
-
-    1 'Chequeo suelo'
-    2592 'if pa=0 and t5=255 then py=py+pv
-
 2599 return
 
 1 '3 derecha'
@@ -126,11 +113,12 @@
 
 1 'Variables'
 
-    2900 'tx=(px+8)/8:ty=(py-1)/8'
-    1 '2960 PRESET(0,212-24):PRINT#1,hex$(varptr(m(0,0,0)))"             "
-    2960 PRESET(0,212-24):PRINT#1,"Level: "ms
+    2900 'PRESET(0,212-40):PRINT#1,ex(0)
+    2960 'if pd=3 and ev(0)>0 then PRESET(0,212-32):PRINT#1,"modo captura "
+    2965 'if pd=7 and ev(0)<0 then PRESET(0,212-32):PRINT#1,"modo huida "
+    2970 PRESET(0,212-24):PRINT#1,"Level: "ms
     1 '2970 PRESET(0,212-16):PRINT#1,"rx: "tx" ty "ty" tw "tw
-    2970 PRESET(0,212-16):PRINT#1,"captured: "lc" $: "pm" live: "pe
+    2975 PRESET(0,212-16):PRINT#1,"To capture: "ec" $: "pm" live: "pe
     2980 PRESET(0,212-8):PRINT#1,"fre: "fre(0)
     1 '2980 PRESET(0,212-8):PRINT#1,"e5: "e5
 3020 return
@@ -149,7 +137,11 @@
     3170 t5=m(ty-1,tx,ms)
 3190 return
 
-
+1 ' Panel de objetos'
+    3500 line(0,19*8)-(256,23*8),7,bf
+    3510 PRESET(70,19*8):PRINT#1,"Objects panel"
+    3520 copy ((128-128)*8,4*8)-(((128-128)*8)+8,(4*8)+8),2 to (16,8*24),0,tpset
+3590 return
 
 
 
@@ -177,54 +169,38 @@
     1 'pd=player direction'
     1 'pv=velocidad eje x'
     1 'pl=velocidad eje y'
-    1 'pc=player capturas'
     1 'pm=player money'
-    5000 px=256/2:py=8*16:pw=16:ph=16:pd=3:pv=4:pl=8:pe=100:pc=0:pm=0
+    5000 px=256/2:py=8*16:pw=16:ph=16:pd=3:pv=4:pl=8:pe=100:pm=0
     5010 dim p(6):p(0)=0:p(1)=1:p(2)=2:p(3)=3:p(4)=4:p(5)=5
     1 'Componente render: Plano 0 para el personaje
     5020 pp=0:ps=1
     1 'Componente RPG=player capturas y energía o vida, player monedas, se define en las pantallas'
-    5030 pc=0:pe=10:pm=0
+    5030 pe=10:pm=0
 5040 return
 
 
 1 'Update player'
 1 'pasado al sistema de input'
 
-1 'render player'
-    1 'El sprite de nuestro personaje es el 1, plano 0'
-    5100 put sprite pp,(px,py),,ps
-    1 'El sprute 0 es el swter de color amarillo, plano 1'
-    5110 'put sprite pp+1,(px,py),11,0
-5190 return
-
 1 ' Rutina barra espaciadora pulsada'
     1 'Ponemos un sonido de pegar on la porra'
     5200 re=10: gosub 2300
     5210 mc=1
 5290 return
+
+
 1' si hay una colisión con un enemigo 1 comprobamos si es por detrás o por delante
 1 'Si es por detrás matamos al enemigo'
-    5300 sprite off:if pd=3 and ev(0)>0 then ey(0)=212:beep
-    5310 if pd=7 and ev(0)<0 then px=256/2:pe=pe-1:beep
+    5300 sprite off
+    1 ' 1000 reinicia los enemigos y el player según el nivel
+    1 'Si el enemigo es cogido en persecución, descontamos 1 captura
+    5310 if ec>0 then if pd=3 and ev(0)>0 and px<ex(0) or pd=7 and ev(0)<0 and px>ex(0) then re=8:gosub 2300:ec=ec-1:ey(0)=ez(ec):eo(0)=rnd(1)*11:put sprite 1,(260,ey(0)),,es(0) else gosub 10000:re=5:gosub 2300:put sprite 0,(0,16*8),,pp
+    1 '5320 if pd=7 and ev(0)<0 and px>ex(0) then ec=ec-1:ea(0)=0:re=8:gosub 2300:put sprite ep,(8*ep/10,212-64),eo(0),12:ep=ep+1:ey(0)=14*8:'for i=0 to 500:next i:ex(0)=256:ey(0)=ez(ec-1)
+    1 ' gosub 10000:pe=pe-1:re=5:gosub 2300'
+    1 'Actulizar marcador'
+    5330 gosub 2900
+    5340 sprite on
 5390 return
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 
@@ -234,21 +210,28 @@
 1' ----------------------------------------------------
 
 1 ' Crear enemigo 1'
-    6000 dim ew(1),eh(1),es(1),ep(1),ex(1),ey(1),ev(1),el(1),ec(1),eo(1)
-    6010 ew(0)=8:eh(0)=8:es(0)=8:ep(0)=1
+    1 'ep=numero de plano por el cual se dibuja al enemigo muerto'
+    1 'ec=enemigos a capturar que irán saliendo uno tras otro'
+    6000 ep=10:ec=0:dim ez(5)
+    6000 dim ew(1),eh(1),es(1),ep(1),ex(1),ey(1),ev(1),el(1),ec(1),eo(1),ea(1)
+    6010 ew(0)=8:eh(0)=8:es(0)=8:ep(0)=1:ea(0)=1
     6020 ex(0)=0:ey(0)=0
-    6110 ev(0)=8
+    6110 ev(0)=2
     6160 ec(0)=0
     6170 eo(0)=rnd(1)*(6-4)+4
-    6200 ew(1)=8:eh(1)=8:es(1)=8:ep(1)=2
-    6205 ex(1)=0:ey(1)=0
-    6210 ev(1)=8:el(1)=8
-    6260 ec(1)=0
-    6270 eo(1)=rnd(1)*(6-4)+4
 6390 return
 
 
 
+    6500 ex(0)=ex(0)+ev(0)
+    6510 if ex(0)>240 or ex(0)<8 then ev(0)=-ev(0) else e5=m((ey(0)/8)-1,(ex(0)/8),ms)
+    1 'Los sprites del enemigo son el 8 y el 9 derecha y el 10 y el 11 izquierda'
+    6520 ec(0)=ec(0)+1
+    6530 if ec(0)>1 then ec(0)=0
+    6540 if ec(0)=0 then es(0)=8 else es(0)=9
+    6550 if ex(0)<256 then if ev(0)>0 then PUT SPRITE 1,(ex(0),ey(0)),eo(0),es(0) else PUT SPRITE 1,(ex(0),ey(0)),eo(0),es(0)+2 
+    6560 if e5<tl(0) then ev(0)=-ev(0)
+6590 return
 
 
 
@@ -259,9 +242,9 @@
 
 
 
-
+1 ' Inicialización level'
     1' level 0'
-    10000 if ms=0 then px=256/2:py=16*8:ex(0)=9*8:ey(0)=10*8:ex(1)=6*8:ey(1)=4*8
+    10000 if ms=0 then ec=3:ez(0)=16*8:ez(1)=4*8:ez(2)=10*8:px=0:py=16*8:ex(0)=230:ey(0)=16*8:ox(0)=30*8:oy(0)=7*8
     1' level 1'
     10020 if ms=1 then px=256/2:py=16*8:ex(0)=14*8:ey(0)=11*8
     1' level 2'
@@ -304,14 +287,11 @@
 1' ----------------------MAPS--------------------------
 1' ----------------------------------------------------
 
-
-
-1 'Init map'
-    20000 'dim m(25,31)
-20010 return
-
-20100 cls
-20110 copy (0,0)-(32*8,23*8),2 to (0,3*8),0,tpset
+1 'Rutina copiar page 2 a page 0'
+    20100 cls
+    1 ' copiamos el tejado'
+    20110 copy(0,64)-(256,86),1 to (0,0),0,tpset
+    20120 copy (0,0)-(32*8,23*8),2 to (0,3*8),0,tpset
 20190 return
 
 

@@ -4,13 +4,22 @@
 120 ts=224:dim tl(1):tl(0)=192:tl(1)=193:dim td(1):td(0)=164:td(1)=165
 125 preset(0,196):print #1,"Pintando en la page 2 level 0"
 130 gosub 20500
-135 gosub 20100
 140 gosub 5000
 150 gosub 6000
-160 gosub 10000
-520 strig(0) on:on strig gosub 5200
+370 cls:preset (80,10):print #1,"!The wathmen"
+380 preset (70,20):print #1,"!MSX Murcia 2022"
+390 preset (0,70):print #1,"!Debes de atrapar a los ladores por detras, si los coges por delente te matan"
+400 preset (0,100):print #1,"!Una vez atrapados, tienes que llamar a la policia y se abrira la puerta de salida"
+440 preset (0,130):print #1,"!Segun el ladron que atrapaes obtendras regalos"
+450 preset (0,150):print #1,"!El verde: te proporciona unas botas que te permiten saltar."
+455 preset (0,170):print #1,"!El rojo: te permite empujar bloques para atrapar a los enemigos"
+460 if strig(0)=-1 then goto 470 else goto 460
+470 gosub 20100
+480 gosub 10000
+500 strig(0) on:on strig gosub 5200
 530 on sprite gosub 5300:sprite on
-540 gosub 2900
+540 gosub 3500
+550 gosub 2900
   
     2000 'nada'
     2010 gosub 2500
@@ -19,20 +28,13 @@
     2040 if t5<ts and t5<>tl(0) and t5<>tl(1) then py=py+pl
     2050 if t0=td(0) or t0=td(1) then mc=1
     
-    2090 ex(0)=ex(0)+ev(0):if ex(0)>240 or ex(0)<8 then ev(0)=-ev(0)
-    2100 'ex(1)=ex(1)+ev(1):if ex(1)>240 or ex(1)<0 then ev(1)=-ev(1)
-    2105 ec(0)=ec(0)+1:if ec(0)>1 then ec(0)=0
-    2120 if ec(0)=0 then es(0)=8 else es(0)=9
-    2140 if ev(0)>0 then PUT SPRITE 1,(ex(0),ey(0)),eo(0),es(0) else PUT SPRITE 1,(ex(0),ey(0)),eo(0),es(0)+2
-    2160 e5=m((ey(0)/8)-1,(ex(0)/8),ms)
-    2170 if e5<tl(0) then ev(0)=-ev(0)
+    2060 if ec>0 then gosub 6500
     
+    2180 if ec=0 then  copy ((130-128)*8,4*8)-(((130-128)*8)+8,(4*8)+8),2 to (ox(0),oy(0)),0,tpset else copy ((128-128)*8,4*8)-(((128-128)*8)+8,(4*8)+8),2 to (ox(0),oy(0)),0,tpset
     
-    
-    
-    2280 if mc=1 then mc=0: ms=ms+1:if ms>mm then preset(40,100):print #1,"game completed":ms=-1:mc=1 else preset(40,100):print #1,"Mission complete!!":gosub 20500:gosub 20100:gosub 10000:gosub 2900
-    2285 'gosub 2900
-2290 goto 2000
+    2290 if mc=1 then mc=0: ms=ms+1:if ms>mm then preset(40,100):print #1,"game completed":ms=-1:mc=1 else preset(40,100):print #1,"Mission complete!!":gosub 20500:gosub 20100:gosub 10000:gosub 2900
+    2295 'gosub 2900
+2299 goto 2000
     2300 a=usr2(0)
     2310 if re=1 then PLAY"O5 L8 V4 M8000 A A D F G2 A A A A r60 G E F D C D G R8 A2 A2 A8","o1 v4 c r8 o2 c r8 o1 v6 c r8 o2 v4 c r8 o1 c r8 o2 v6 c r8"
     2350 if re=5 then play "l10 o4 v4 g c"
@@ -43,7 +45,6 @@
     2400 if re=10 then sound 6,5:sound 8,16:sound 12,6:sound 13,9
 2420 return
     2500 on stick(0) gosub 2700,2500,2600,2500,2800,2500,2640
-    2592 'if pa=0 and t5=255 then py=py+pv
 2599 return
     2600 px=px+pv:pd=3:swap p(0),p(1):ps=p(1):if px>240 then px=240
 2630 return
@@ -53,9 +54,11 @@
 2750 return
     2800 if t5=tl(0) or t5=tl(1) then py=py+pl:swap p(4),p(5):ps=p(4)
 2850 return
-    2900 'tx=(px+8)/8:ty=(py-1)/8'
-    2960 PRESET(0,212-24):PRINT#1,"Level: "ms
-    2970 PRESET(0,212-16):PRINT#1,"captured: "lc" $: "pm" live: "pe
+    2900 'PRESET(0,212-40):PRINT#1,ex(0)
+    2960 'if pd=3 and ev(0)>0 then PRESET(0,212-32):PRINT#1,"modo captura "
+    2965 'if pd=7 and ev(0)<0 then PRESET(0,212-32):PRINT#1,"modo huida "
+    2970 PRESET(0,212-24):PRINT#1,"Level: "ms
+    2975 PRESET(0,212-16):PRINT#1,"To capture: "ec" $: "pm" live: "pe
     2980 PRESET(0,212-8):PRINT#1,"fre: "fre(0)
 3020 return
     3100 tx=(px)/8:ty=(py)/8
@@ -64,33 +67,40 @@
     3150 t3=m(ty-3,tx+1,ms)
     3170 t5=m(ty-1,tx,ms)
 3190 return
-    5000 px=256/2:py=8*16:pw=16:ph=16:pd=3:pv=4:pl=8:pe=100:pc=0:pm=0
+    3500 line(0,19*8)-(256,23*8),7,bf
+    3510 PRESET(70,19*8):PRINT#1,"Objects panel"
+    3520 copy ((128-128)*8,4*8)-(((128-128)*8)+8,(4*8)+8),2 to (16,8*24),0,tpset
+3590 return
+    5000 px=256/2:py=8*16:pw=16:ph=16:pd=3:pv=4:pl=8:pe=100:pm=0
     5010 dim p(6):p(0)=0:p(1)=1:p(2)=2:p(3)=3:p(4)=4:p(5)=5
     5020 pp=0:ps=1
-    5030 pc=0:pe=10:pm=0
+    5030 pe=10:pm=0
 5040 return
-    5100 put sprite pp,(px,py),,ps
-    5110 'put sprite pp+1,(px,py),11,0
-5190 return
     5200 re=10: gosub 2300
     5210 mc=1
 5290 return
-    5300 sprite off:if pd=3 and ev(0)>0 then ey(0)=212:beep
-    5310 if pd=7 and ev(0)<0 then px=256/2:pe=pe-1:beep
+    5300 sprite off
+    5310 if ec>0 then if pd=3 and ev(0)>0 and px<ex(0) or pd=7 and ev(0)<0 and px>ex(0) then re=8:gosub 2300:ec=ec-1:ey(0)=ez(ec):eo(0)=rnd(1)*11:put sprite 1,(260,ey(0)),,es(0) else gosub 10000:re=5:gosub 2300:put sprite 0,(0,16*8),,pp
+    5330 gosub 2900
+    5340 sprite on
 5390 return
-    6000 dim ew(1),eh(1),es(1),ep(1),ex(1),ey(1),ev(1),el(1),ec(1),eo(1)
-    6010 ew(0)=8:eh(0)=8:es(0)=8:ep(0)=1
+    6000 ep=10:ec=0:dim ez(5)
+    6000 dim ew(1),eh(1),es(1),ep(1),ex(1),ey(1),ev(1),el(1),ec(1),eo(1),ea(1)
+    6010 ew(0)=8:eh(0)=8:es(0)=8:ep(0)=1:ea(0)=1
     6020 ex(0)=0:ey(0)=0
-    6110 ev(0)=8
+    6110 ev(0)=2
     6160 ec(0)=0
     6170 eo(0)=rnd(1)*(6-4)+4
-    6200 ew(1)=8:eh(1)=8:es(1)=8:ep(1)=2
-    6205 ex(1)=0:ey(1)=0
-    6210 ev(1)=8:el(1)=8
-    6260 ec(1)=0
-    6270 eo(1)=rnd(1)*(6-4)+4
 6390 return
-    10000 if ms=0 then px=256/2:py=16*8:ex(0)=9*8:ey(0)=10*8:ex(1)=6*8:ey(1)=4*8
+    6500 ex(0)=ex(0)+ev(0)
+    6510 if ex(0)>240 or ex(0)<8 then ev(0)=-ev(0) else e5=m((ey(0)/8)-1,(ex(0)/8),ms)
+    6520 ec(0)=ec(0)+1
+    6530 if ec(0)>1 then ec(0)=0
+    6540 if ec(0)=0 then es(0)=8 else es(0)=9
+    6550 if ex(0)<256 then if ev(0)>0 then PUT SPRITE 1,(ex(0),ey(0)),eo(0),es(0) else PUT SPRITE 1,(ex(0),ey(0)),eo(0),es(0)+2 
+    6560 if e5<tl(0) then ev(0)=-ev(0)
+6590 return
+    10000 if ms=0 then ec=3:ez(0)=16*8:ez(1)=4*8:ez(2)=10*8:px=0:py=16*8:ex(0)=230:ey(0)=16*8:ox(0)=30*8:oy(0)=7*8
     10020 if ms=1 then px=256/2:py=16*8:ex(0)=14*8:ey(0)=11*8
     10040 if ms=2 then px=256/2:py=16*8:ex(0)=16*8:ey(0)=14*8
     10060 if ms=3 then px=256/2:py=16*8:ex(0)=14*8:ey(0)=14*8
@@ -98,10 +108,9 @@
     10100 if ms=5 then px=256/2:py=16*8:ex(0)=14*8:ey(0)=11*8
     10120 if ms=6 then px=256/2:py=16*8:ex(0)=14*8:ey(0)=10*8
 10140 return
-    20000 'dim m(25,31)
-20010 return
-20100 cls
-20110 copy (0,0)-(32*8,23*8),2 to (0,3*8),0,tpset
+    20100 cls
+    20110 copy(0,64)-(256,86),1 to (0,0),0,tpset
+    20120 copy (0,0)-(32*8,23*8),2 to (0,3*8),0,tpset
 20190 return
     20300 for mf=0 to mm
         20350 for f=0 to 15:mp$=""
