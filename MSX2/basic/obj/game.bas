@@ -27,9 +27,10 @@
     2030 gosub 3100
     2040 if t5<ts and t5<>tl(0) and t5<>tl(1) then py=py+pl
     2050 if t0=td(0) or t0=td(1) then mc=1
-    2060 if t0=37 then sprite off else sprite on
-    2070 if t0=4 then beep:line (tx*8,(ty+1)*8)-((tx*8)+8,((ty+1)*8)+8),6,bf:m(ty-2,tx,ms)=0
-    2080 if ec>0 then gosub 6500
+    2060 if t0=37 then sprite off 
+    2070 if t0=104 then sprite on
+    2080 if t0=4 then beep:line (tx*8,(ty+1)*8)-((tx*8)+8,((ty+1)*8)+8),15,bf:m(ty-2,tx,ms)=0
+    2090 if ec>0 then gosub 6500
     
     2180 if ec=0 then  copy ((130-128)*8,4*8)-(((130-128)*8)+8,(4*8)+8),2 to (ox(0),oy(0)),0,tpset else copy ((128-128)*8,4*8)-(((128-128)*8)+8,(4*8)+8),2 to (ox(0),oy(0)),0,tpset
     
@@ -101,7 +102,7 @@
     6550 if ex(0)<256 then if ev(0)>0 then PUT SPRITE 1,(ex(0),ey(0)),eo(0),es(0) else PUT SPRITE 1,(ex(0),ey(0)),eo(0),es(0)+2 
     6560 if e5<tl(0) then ev(0)=-ev(0)
 6590 return
-    10000 if ms=0 then ec=3:ez(0)=16*8:ez(1)=4*8:ez(2)=10*8:px=0:py=16*8:ex(0)=230:ey(0)=16*8:ox(0)=30*8:oy(0)=7*8:put sprite 2,(4*8,16*8),6+32,13:put sprite 3,(4*8,16*8),15+32,14
+    10000 if ms=0 then ec=3:ez(0)=16*8:ez(1)=4*8:ez(2)=10*8:px=0:py=16*8:ex(0)=230:ey(0)=16*8:ox(0)=30*8:oy(0)=7*8:put sprite 2,(13*8,16*8),6+32,13:put sprite 3,(13*8,16*8),15+32,14
     10020 if ms=1 then px=256/2:py=16*8:ex(0)=14*8:ey(0)=11*8
     10040 if ms=2 then px=256/2:py=16*8:ex(0)=16*8:ey(0)=14*8
     10060 if ms=3 then px=256/2:py=16*8:ex(0)=14*8:ey(0)=14*8
@@ -158,9 +159,9 @@
 21090 data 05e200c100c20ce200c100c208e2
 21100 data 050000c100c20c0000c100c20800
 21110 data 050000c100c20c0000c100c20800
-21120 data 050000c100c20c0000c100c20800
-21130 data 0300012600c100c20c0000c100c20800
-21140 data 00050200012600c100c20c0000c100c20800
+21120 data 050000c100c203000369040000c100c20800
+21130 data 050000c100c20300006901480069040000c100c20800
+21140 data 0005040000c100c20300006901260069040000c100c20800
 21150 data 1ee100e2
 21230 data 1fe2
 21240 data 00e300e41300001000300500000e003e003

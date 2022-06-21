@@ -54,13 +54,14 @@
     2040 if t5<ts and t5<>tl(0) and t5<>tl(1) then py=py+pl
     1 ' Si tocamos la puerta cambiamos de pantalla'
     2050 if t0=td(0) or t0=td(1) then mc=1
-    1 'Si es un diván desactivamos las colisiones'
-    2060 if t0=37 then sprite off else sprite on
+    1 'Si es un dibán desactivamos las colisiones'
+    2060 if t0=37 then sprite off 
+    2070 if t0=104 then sprite on
     1' si es una moneda
-    2070 if t0=4 then beep:line (tx*8,(ty+1)*8)-((tx*8)+8,((ty+1)*8)+8),6,bf:m(ty-2,tx,ms)=0
+    2080 if t0=4 then beep:line (tx*8,(ty+1)*8)-((tx*8)+8,((ty+1)*8)+8),15,bf:m(ty-2,tx,ms)=0
     1'---------------ENEMIGOS------------------
     1 'Update enemigo 1'
-    2080 if ec>0 then gosub 6500
+    2090 if ec>0 then gosub 6500
     1'---------FIN DE-ENEMIGOS------------------
     
     1 'El telefono rojo son los tiles 130'
@@ -248,7 +249,7 @@
 1 ' Inicialización level'
     1' level 0'
     1 'Sprite 2 dibán, sprite 3 blanco para ocultarse'
-    10000 if ms=0 then ec=3:ez(0)=16*8:ez(1)=4*8:ez(2)=10*8:px=0:py=16*8:ex(0)=230:ey(0)=16*8:ox(0)=30*8:oy(0)=7*8:put sprite 2,(4*8,16*8),6+32,13:put sprite 3,(4*8,16*8),15+32,14
+    10000 if ms=0 then ec=3:ez(0)=16*8:ez(1)=4*8:ez(2)=10*8:px=0:py=16*8:ex(0)=230:ey(0)=16*8:ox(0)=30*8:oy(0)=7*8:put sprite 2,(13*8,16*8),6+32,13:put sprite 3,(13*8,16*8),15+32,14
     1' level 1'
     10020 if ms=1 then px=256/2:py=16*8:ex(0)=14*8:ey(0)=11*8
     1' level 2'
@@ -421,8 +422,6 @@
 20690 return
 
 1'Level 0 comprimido
-
-
 21000 data 006500661d00
 21010 data 008500861d00
 21020 data 00a500a61c000005
@@ -435,9 +434,9 @@
 21090 data 05e200c100c20ce200c100c208e2
 21100 data 050000c100c20c0000c100c20800
 21110 data 050000c100c20c0000c100c20800
-21120 data 050000c100c20c0000c100c20800
-21130 data 0300012600c100c20c0000c100c20800
-21140 data 00050200012600c100c20c0000c100c20800
+21120 data 050000c100c203000369040000c100c20800
+21130 data 050000c100c20300006901480069040000c100c20800
+21140 data 0005040000c100c20300006901260069040000c100c20800
 21150 data 1ee100e2
 1 'Level 0 sin comprimir'
 1 '21000 data 00000006070000090a0000000000000000000607000000000000000000000000
