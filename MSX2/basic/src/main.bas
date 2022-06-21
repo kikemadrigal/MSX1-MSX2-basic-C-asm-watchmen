@@ -47,17 +47,20 @@
 
     1'---------------PLAYER------------------
     1 'render player, el update lo hacemos en el sistema de input'
-    2020 put sprite pp,(px,py),,ps
+    2020 put sprite 10,(px,py),,ps
     1 'Chekeo del mapa'
     2030 gosub 3100
     1 'Gravedad del player'
     2040 if t5<ts and t5<>tl(0) and t5<>tl(1) then py=py+pl
     1 ' Si tocamos la puerta cambiamos de pantalla'
     2050 if t0=td(0) or t0=td(1) then mc=1
-    
+    1 'Si es un diván desactivamos las colisiones'
+    2060 if t0=37 then sprite off else sprite on
+    1' si es una moneda
+    2070 if t0=4 then beep:line (tx*8,(ty+1)*8)-((tx*8)+8,((ty+1)*8)+8),15,bf:m(ty-2,tx,ms)=0
     1'---------------ENEMIGOS------------------
     1 'Update enemigo 1'
-    2060 if ec>0 then gosub 6500
+    2080 if ec>0 then gosub 6500
     1'---------FIN DE-ENEMIGOS------------------
     
     1 'El telefono rojo son los tiles 130'
@@ -191,10 +194,10 @@
 
 1' si hay una colisión con un enemigo 1 comprobamos si es por detrás o por delante
 1 'Si es por detrás matamos al enemigo'
-    5300 sprite off
+    5300 sprite off:beep
     1 ' 1000 reinicia los enemigos y el player según el nivel
     1 'Si el enemigo es cogido en persecución, descontamos 1 captura
-    5310 if ec>0 then if pd=3 and ev(0)>0 and px<ex(0) or pd=7 and ev(0)<0 and px>ex(0) then re=8:gosub 2300:ec=ec-1:ey(0)=ez(ec):eo(0)=rnd(1)*11:put sprite 1,(260,ey(0)),,es(0) else gosub 10000:re=5:gosub 2300:put sprite 0,(0,16*8),,pp
+    5310 if ec>0 then if pd=3 and ev(0)>0 and px<ex(0) or pd=7 and ev(0)<0 and px>ex(0) then re=8:gosub 2300:ec=ec-1:ey(0)=ez(ec):eo(0)=rnd(1)*11:put sprite 1,(260,ey(0)),,es(0) else gosub 10000:re=5:gosub 2300:put sprite 10,(0,16*8),,pp
     1 '5320 if pd=7 and ev(0)<0 and px>ex(0) then ec=ec-1:ea(0)=0:re=8:gosub 2300:put sprite ep,(8*ep/10,212-64),eo(0),12:ep=ep+1:ey(0)=14*8:'for i=0 to 500:next i:ex(0)=256:ey(0)=ez(ec-1)
     1 ' gosub 10000:pe=pe-1:re=5:gosub 2300'
     1 'Actulizar marcador'
@@ -244,7 +247,8 @@
 
 1 ' Inicialización level'
     1' level 0'
-    10000 if ms=0 then ec=3:ez(0)=16*8:ez(1)=4*8:ez(2)=10*8:px=0:py=16*8:ex(0)=230:ey(0)=16*8:ox(0)=30*8:oy(0)=7*8
+    1 'Sprite 2 dibán, sprite 3 blanco para ocultarse'
+    10000 if ms=0 then ec=3:ez(0)=16*8:ez(1)=4*8:ez(2)=10*8:px=0:py=16*8:ex(0)=230:ey(0)=16*8:ox(0)=30*8:oy(0)=7*8:put sprite 2,(4*8,16*8),6+32,13:put sprite 3,(4*8,16*8),15+32,14
     1' level 1'
     10020 if ms=1 then px=256/2:py=16*8:ex(0)=14*8:ey(0)=11*8
     1' level 2'
@@ -308,7 +312,7 @@
 1 '            1 ' repetimos el valor tantas veces como indique R'
 1 '            20360 tn=O-1
 1 '            20370 if tn >=0 and tn <32 then copy (tn*8,0)-((tn*8)+8,8),1 to (co*8,T*8),2,tpset
-1 '            20380 if tn >=32 and tn <64 then copy ((tn-32)*8,8)-(((tn-32)*8)+8,8),1 to (co*8,T*8),2,tpset
+1 '            20380 if tn >=32 and tn <64 then copy ((tn-32)*mak8,8)-(((tn-32)*8)+8,8),1 to (co*8,T*8),2,tpset
 1 '            20390 if tn >=32 and tn <64 then copy ((tn-32)*8,1*8)-(((tn-32)*8)+8,(1*8)+8),1 to (co*8,T*8),2,tpset
 1 '            20400 if tn >=64 and tn <96 then copy ((tn-64)*8,2*8)-(((tn-64)*8)+8,(2*8)+8),1 to (co*8,T*8),2,tpset
 1 '            20410 if tn>=96 and tn <128 then copy ((tn-96)*8,3*8)-(((tn-96)*8)+8,(3*8)+8),1 to (co*8,T*8),2,tpset
@@ -417,21 +421,23 @@
 20690 return
 
 1'Level 0 comprimido
+
+
 21000 data 006500661d00
-21010 data 008500861b0000040005
-21020 data 00a500a61b0000240025
+21010 data 008500861d00
+21020 data 00a500a61c000005
 21030 data 09e100c100c212e100e2
 21040 data 090000c100c21300
 21050 data 090000c100c21300
 21060 data 090000c100c21300
-21070 data 000000040005060000c100c2110000810082
-21080 data 000000240025060000c100c2110000a100a2
+21070 data 090000c100c2110000810082
+21080 data 0005080000c100c2110000a100a2
 21090 data 05e200c100c20ce200c100c208e2
 21100 data 050000c100c20c0000c100c20800
 21110 data 050000c100c20c0000c100c20800
 21120 data 050000c100c20c0000c100c20800
-21130 data 050000c100c20c0000c100c2060000040005
-21140 data 050000c100c20c0000c100c2060000240025
+21130 data 0300012600c100c20c0000c100c20800
+21140 data 00050200012600c100c20c0000c100c20800
 21150 data 1ee100e2
 1 'Level 0 sin comprimir'
 1 '21000 data 00000006070000090a0000000000000000000607000000000000000000000000
@@ -530,6 +536,7 @@
 21630 data 00e100040005020000c100c200e10d0000c100c2050000e1
 21640 data 00e100240025020000c100c200e10d0000c100c2050000e1
 21650 data 1fe1
+
 1 'Level 2 sin comprimir
 1 '21460 data e1e1e1e1e1e1e1e1e1e1e1e1e1e1e1e1e1e1e1e1e1e1e1e1e1e1e1e1e1e1e1e1
 1 '21470 data e1656600000000000000000000000000000000000000000000000000000000e1
