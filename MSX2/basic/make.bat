@@ -5,7 +5,11 @@ rem sjasm (http://www.xl2s.tk/) es un compilador de ensamblador z80 que puedo co
 rem necesitamos el .bin de la pantalla de carga y del reproductor de música
 
 start /wait tools/sjasm/sjasm.exe src/world0.asm
+start /wait tools/sjasm/sjasm.exe src/world1.asm
+start /wait tools/sjasm/sjasm.exe src/musicint.asm
 move /y world0.bin .\bin
+move /y world1.bin .\bin
+move /Y musicint.bin ./obj
 rem del /F src\music.lst
 
 

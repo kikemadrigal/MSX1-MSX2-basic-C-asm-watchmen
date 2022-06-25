@@ -1,0 +1,352 @@
+Sjasm Z80 Assembler v0.42c - www.xl2s.tk             [2022.06.25 - 06:49:17]
+
+src/world1.asm
+Errors: 0
+
+       1   00:0000                              output "world1.bin"
+       2   00:C000                      
+       3   00:C000  FE                      db   #fe               ; ID archivo binario, siempre hay que poner el mismo 0FEh
+       4   00:C001  00 C0                   dw   INICIO            ; dirección de inicio
+       5   00:C003  00 CC                   dw   FINAL - 1         ; dirección final
+       6   00:C005  00 C0                   dw   INICIO             ; dircción del programa de ejecución (para cuando pongas r en bload"nombre_programa", r)
+       7   00:C007                      
+       8   00:C007                          org #c000 ; o 57344, org se utiliza para decirle al z80 en que posición de memoria RAM empieza nuestro programa en ensamblador
+       9   00:C000                      
+      10   00:C000                      INICIO:
+      11   00:C000  C9                      ret ; el ret es necesario para que vuelva al basic
+      12   00:C001                             
+      13   00:C001                      Level0:
+      14   00:C001                          db 224,224,224,224,224,224,224,224,224,224,224,224,224,224,224,224,224,224,224,224,224,224,224,224,224,224,224,224,224,224,224,224
+      14   00:C001  E0 E0 E0 E0 E0 E0 E0 E0 E0 E0 E0 E0 E0 E0 E0 E0 
+      14   00:C011  E0 E0 E0 E0 E0 E0 E0 E0 E0 E0 E0 E0 E0 E0 E0 E0 
+      15   00:C021                          db 224,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,224
+      15   00:C021  E0 FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF 
+      15   00:C031  FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF E0 
+      16   00:C041                          db 224,-1,-1,-1,-1,-1,224,224,224,192,193,224,224,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,4,-1,-1,224
+      16   00:C041  E0 FF FF FF FF FF E0 E0 E0 C0 C1 E0 E0 FF FF FF 
+      16   00:C051  FF FF FF FF FF FF FF FF FF FF FF FF 04 FF FF E0 
+      17   00:C061                          db 224,-1,-1,224,-1,-1,-1,-1,-1,192,193,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,224,224,224,224,-1,-1,224
+      17   00:C061  E0 FF FF E0 FF FF FF FF FF C0 C1 FF FF FF FF FF 
+      17   00:C071  FF FF FF FF FF FF FF FF FF E0 E0 E0 E0 FF FF E0 
+      18   00:C081                          db 224,-1,-1,224,-1,-1,-1,-1,-1,192,193,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,224,-1,-1,224
+      18   00:C081  E0 FF FF E0 FF FF FF FF FF C0 C1 FF FF FF FF FF 
+      18   00:C091  FF FF FF FF FF FF FF FF FF FF FF FF E0 FF FF E0 
+      19   00:C0A1                          db 224,-1,-1,224,-1,-1,-1,-1,-1,192,193,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,224,-1,224,224
+      19   00:C0A1  E0 FF FF E0 FF FF FF FF FF C0 C1 FF FF FF FF FF 
+      19   00:C0B1  FF FF FF FF FF FF FF FF FF FF FF FF E0 FF E0 E0 
+      20   00:C0C1                          db 224,-1,-1,224,-1,-1,-1,-1,-1,192,193,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,224,-1,-1,224
+      20   00:C0C1  E0 FF FF E0 FF FF FF FF FF C0 C1 FF FF FF FF FF 
+      20   00:C0D1  FF FF FF FF FF FF FF FF FF FF FF FF E0 FF FF E0 
+      21   00:C0E1                          db 224,-1,224,224,224,224,-1,-1,-1,192,193,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,224,224,224,224,-1,-1,224
+      21   00:C0E1  E0 FF E0 E0 E0 E0 FF FF FF C0 C1 FF FF FF FF FF 
+      21   00:C0F1  FF FF FF FF FF FF FF FF FF E0 E0 E0 E0 FF FF E0 
+      22   00:C101                          db 224,-1,-1,224,-1,-1,-1,-1,-1,192,193,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,224,-1,-1,224
+      22   00:C101  E0 FF FF E0 FF FF FF FF FF C0 C1 FF FF FF FF FF 
+      22   00:C111  FF FF FF FF FF FF FF FF FF FF FF FF E0 FF FF E0 
+      23   00:C121                          db 224,-1,-1,224,-1,-1,-1,-1,-1,224,224,224,224,224,224,224,224,224,224,224,224,224,224,224,-1,-1,-1,-1,224,-1,-1,224
+      23   00:C121  E0 FF FF E0 FF FF FF FF FF E0 E0 E0 E0 E0 E0 E0 
+      23   00:C131  E0 E0 E0 E0 E0 E0 E0 E0 FF FF FF FF E0 FF FF E0 
+      24   00:C141                          db 224,4,-1,224,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,224,-1,-1,224
+      24   00:C141  E0 04 FF E0 FF FF FF FF FF FF FF FF FF FF FF FF 
+      24   00:C151  FF FF FF FF FF FF FF FF FF FF FF FF E0 FF FF E0 
+      25   00:C161                          db 224,224,-1,224,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,224,224,-1,224
+      25   00:C161  E0 E0 FF E0 FF FF FF FF FF FF FF FF FF FF FF FF 
+      25   00:C171  FF FF FF FF FF FF FF FF FF FF FF FF E0 E0 FF E0 
+      26   00:C181                          db 224,100,101,224,224,224,224,224,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,224,224,224,224,224,-1,-1,224
+      26   00:C181  E0 64 65 E0 E0 E0 E0 E0 FF FF FF FF FF FF FF FF 
+      26   00:C191  FF FF FF FF FF FF FF FF E0 E0 E0 E0 E0 FF FF E0 
+      27   00:C1A1                          db 224,132,133,224,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,224,128,129,224
+      27   00:C1A1  E0 84 85 E0 FF FF FF FF FF FF FF FF FF FF FF FF 
+      27   00:C1B1  FF FF FF FF FF FF FF FF FF FF FF FF E0 80 81 E0 
+      28   00:C1C1                          db 224,164,165,224,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,4,-1,224,160,161,224
+      28   00:C1C1  E0 A4 A5 E0 FF FF FF FF FF FF FF FF FF FF FF FF 
+      28   00:C1D1  FF FF FF FF FF FF FF FF FF FF 04 FF E0 A0 A1 E0 
+      29   00:C1E1                          db 224,224,224,224,224,224,224,224,224,224,224,224,224,224,224,224,224,224,224,224,224,224,224,224,224,224,224,224,224,224,224,224
+      29   00:C1E1  E0 E0 E0 E0 E0 E0 E0 E0 E0 E0 E0 E0 E0 E0 E0 E0 
+      29   00:C1F1  E0 E0 E0 E0 E0 E0 E0 E0 E0 E0 E0 E0 E0 E0 E0 E0 
+      30   00:C201                      
+      31   00:C201                      level1:
+      32   00:C201                          db 226,226,226,226,226,226,226,226,226,226,226,226,226,226,226,226,226,226,226,226,226,226,226,226,226,226,226,226,226,226,226,226
+      32   00:C201  E2 E2 E2 E2 E2 E2 E2 E2 E2 E2 E2 E2 E2 E2 E2 E2 
+      32   00:C211  E2 E2 E2 E2 E2 E2 E2 E2 E2 E2 E2 E2 E2 E2 E2 E2 
+      33   00:C221                          db 226,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,100,101,226
+      33   00:C221  E2 FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF 
+      33   00:C231  FF FF FF FF FF FF FF FF FF FF FF FF FF 64 65 E2 
+      34   00:C241                          db 226,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,132,133,226
+      34   00:C241  E2 FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF 
+      34   00:C251  FF FF FF FF FF FF FF FF FF FF FF FF FF 84 85 E2 
+      35   00:C261                          db 226,-1,4,-1,-1,-1,-1,-1,-1,-1,0,1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,224,224,164,165,224
+      35   00:C261  E2 FF 04 FF FF FF FF FF FF FF 00 01 FF FF FF FF 
+      35   00:C271  FF FF FF FF FF FF FF FF FF FF FF E0 E0 A4 A5 E0 
+      36   00:C281                          db 226,224,224,192,193,-1,-1,-1,-1,-1,32,33,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,225,225,226
+      36   00:C281  E2 E0 E0 C0 C1 FF FF FF FF FF 20 21 FF FF FF FF 
+      36   00:C291  FF FF FF FF FF FF FF FF FF FF FF FF FF E1 E1 E2 
+      37   00:C2A1                          db 226,-1,-1,192,193,-1,-1,-1,-1,-1,224,224,224,224,224,224,224,224,224,192,193,224,224,-1,-1,-1,-1,-1,-1,-1,-1,226
+      37   00:C2A1  E2 FF FF C0 C1 FF FF FF FF FF E0 E0 E0 E0 E0 E0 
+      37   00:C2B1  E0 E0 E0 C0 C1 E0 E0 FF FF FF FF FF FF FF FF E2 
+      38   00:C2C1                          db 226,-1,-1,192,193,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,192,193,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,226
+      38   00:C2C1  E2 FF FF C0 C1 FF FF FF FF FF FF FF FF FF FF FF 
+      38   00:C2D1  FF FF FF C0 C1 FF FF FF FF FF FF FF FF FF FF E2 
+      39   00:C2E1                          db 226,-1,-1,192,193,-1,-1,-1,-1,-1,-1,-1,-1,-1,128,129,-1,-1,-1,192,193,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,226
+      39   00:C2E1  E2 FF FF C0 C1 FF FF FF FF FF FF FF FF FF 80 81 
+      39   00:C2F1  FF FF FF C0 C1 FF FF FF FF FF FF FF FF FF FF E2 
+      40   00:C301                          db 226,-1,-1,192,193,-1,-1,-1,-1,-1,-1,-1,-1,-1,160,161,-1,-1,-1,192,193,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,226
+      40   00:C301  E2 FF FF C0 C1 FF FF FF FF FF FF FF FF FF A0 A1 
+      40   00:C311  FF FF FF C0 C1 FF FF FF FF FF FF FF FF FF FF E2 
+      41   00:C321                          db 226,-1,-1,192,193,-1,-1,-1,-1,-1,-1,-1,224,224,224,224,-1,-1,-1,224,224,224,-1,-1,-1,-1,-1,-1,-1,-1,-1,226
+      41   00:C321  E2 FF FF C0 C1 FF FF FF FF FF FF FF E0 E0 E0 E0 
+      41   00:C331  FF FF FF E0 E0 E0 FF FF FF FF FF FF FF FF FF E2 
+      42   00:C341                          db 226,-1,-1,192,193,-1,-1,-1,-1,-1,-1,-1,192,193,-1,-1,-1,-1,-1,-1,-1,224,224,-1,-1,-1,-1,-1,-1,-1,-1,226
+      42   00:C341  E2 FF FF C0 C1 FF FF FF FF FF FF FF C0 C1 FF FF 
+      42   00:C351  FF FF FF FF FF E0 E0 FF FF FF FF FF FF FF FF E2 
+      43   00:C361                          db 226,-1,-1,192,193,-1,-1,-1,-1,-1,-1,-1,192,193,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,226
+      43   00:C361  E2 FF FF C0 C1 FF FF FF FF FF FF FF C0 C1 FF FF 
+      43   00:C371  FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF E2 
+      44   00:C381                          db 226,-1,-1,192,193,-1,-1,-1,-1,-1,-1,-1,192,193,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,226
+      44   00:C381  E2 FF FF C0 C1 FF FF FF FF FF FF FF C0 C1 FF FF 
+      44   00:C391  FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF E2 
+      45   00:C3A1                          db 226,-1,-1,224,224,224,224,224,224,-1,-1,-1,192,193,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,224,224,224,224,-1,-1,-1,226
+      45   00:C3A1  E2 FF FF E0 E0 E0 E0 E0 E0 FF FF FF C0 C1 FF FF 
+      45   00:C3B1  FF FF FF FF FF FF FF FF E0 E0 E0 E0 FF FF FF E2 
+      46   00:C3C1                          db 226,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,192,193,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,226
+      46   00:C3C1  E2 FF FF FF FF FF FF FF FF FF FF FF C0 C1 FF FF 
+      46   00:C3D1  FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF E2 
+      47   00:C3E1                          db 226,226,226,226,226,226,226,226,226,226,226,226,226,226,226,226,226,226,226,226,226,226,226,226,226,226,226,226,226,226,226,226
+      47   00:C3E1  E2 E2 E2 E2 E2 E2 E2 E2 E2 E2 E2 E2 E2 E2 E2 E2 
+      47   00:C3F1  E2 E2 E2 E2 E2 E2 E2 E2 E2 E2 E2 E2 E2 E2 E2 E2 
+      48   00:C401                      
+      49   00:C401                         
+      50   00:C401                      level2:
+      51   00:C401                          db -1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,128,129
+      51   00:C401  FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF 
+      51   00:C411  FF FF FF FF FF FF FF FF FF FF FF FF FF FF 80 81 
+      52   00:C421                          db -1,-1,4,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,160,161
+      52   00:C421  FF FF 04 FF FF FF FF FF FF FF FF FF FF FF FF FF 
+      52   00:C431  FF FF FF FF FF FF FF FF FF FF FF FF FF FF A0 A1 
+      53   00:C441                          db -1,224,224,224,224,224,224,-1,-1,-1,-1,-1,-1,-1,39,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,224,224,224,224,224,224
+      53   00:C441  FF E0 E0 E0 E0 E0 E0 FF FF FF FF FF FF FF 27 FF 
+      53   00:C451  FF FF FF FF FF FF FF FF FF FF E0 E0 E0 E0 E0 E0 
+      54   00:C461                          db -1,-1,-1,-1,-1,-1,-1,-1,-1,0,1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,224
+      54   00:C461  FF FF FF FF FF FF FF FF FF 00 01 FF FF FF FF FF 
+      54   00:C471  FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF E0 
+      55   00:C481                          db -1,-1,-1,-1,-1,-1,-1,-1,-1,32,33,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,224
+      55   00:C481  FF FF FF FF FF FF FF FF FF 20 21 FF FF FF FF FF 
+      55   00:C491  FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF E0 
+      56   00:C4A1                          db 224,-1,-1,-1,-1,-1,-1,-1,-1,225,225,225,225,225,225,225,225,225,192,193,225,225,225,225,225,225,-1,-1,-1,-1,-1,224
+      56   00:C4A1  E0 FF FF FF FF FF FF FF FF E1 E1 E1 E1 E1 E1 E1 
+      56   00:C4B1  E1 E1 C0 C1 E1 E1 E1 E1 E1 E1 FF FF FF FF FF E0 
+      57   00:C4C1                          db 224,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,192,193,-1,-1,-1,-1,5,6,-1,-1,-1,-1,-1,224
+      57   00:C4C1  E0 FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF 
+      57   00:C4D1  FF FF C0 C1 FF FF FF FF 05 06 FF FF FF FF FF E0 
+      58   00:C4E1                          db 224,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,192,193,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,224
+      58   00:C4E1  E0 FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF 
+      58   00:C4F1  FF FF C0 C1 FF FF FF FF FF FF FF FF FF FF FF E0 
+      59   00:C501                          db 224,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,224,224,224,224,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,224
+      59   00:C501  E0 FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF 
+      59   00:C511  E0 E0 E0 E0 FF FF FF FF FF FF FF FF FF FF FF E0 
+      60   00:C521                          db 224,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,224
+      60   00:C521  E0 FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF 
+      60   00:C531  FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF E0 
+      61   00:C541                          db 224,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,4,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,225,225,225,225,224
+      61   00:C541  E0 FF FF FF FF FF FF FF FF FF FF 04 FF FF FF FF 
+      61   00:C551  FF FF FF FF FF FF FF FF FF FF FF E1 E1 E1 E1 E0 
+      62   00:C561                          db 224,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,224,224,192,193,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,224
+      62   00:C561  E0 FF FF FF FF FF FF FF FF FF FF E0 E0 C0 C1 FF 
+      62   00:C571  FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF E0 
+      63   00:C581                          db 224,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,192,193,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,224
+      63   00:C581  E0 FF FF FF FF FF FF FF FF FF FF FF FF C0 C1 FF 
+      63   00:C591  FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF E0 
+      64   00:C5A1                          db 224,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,192,193,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,224
+      64   00:C5A1  E0 FF FF FF FF FF FF FF FF FF FF FF FF C0 C1 FF 
+      64   00:C5B1  FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF E0 
+      65   00:C5C1                          db 224,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,192,193,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,4,-1,224
+      65   00:C5C1  E0 FF FF FF FF FF FF FF FF FF FF FF FF C0 C1 FF 
+      65   00:C5D1  FF FF FF FF FF FF FF FF FF FF FF FF FF 04 FF E0 
+      66   00:C5E1                          db 224,225,225,225,225,225,225,225,225,225,225,225,225,225,225,225,225,225,225,225,225,225,225,225,225,225,225,225,225,225,225,224
+      66   00:C5E1  E0 E1 E1 E1 E1 E1 E1 E1 E1 E1 E1 E1 E1 E1 E1 E1 
+      66   00:C5F1  E1 E1 E1 E1 E1 E1 E1 E1 E1 E1 E1 E1 E1 E1 E1 E0 
+      67   00:C601                      
+      68   00:C601                      level3:
+      69   00:C601                         
+      70   00:C601                          db 226,226,226,226,226,226,226,226,226,226,226,226,226,226,226,226,226,226,226,226,226,226,226,226,226,226,226,226,226,226,226,227
+      70   00:C601  E2 E2 E2 E2 E2 E2 E2 E2 E2 E2 E2 E2 E2 E2 E2 E2 
+      70   00:C611  E2 E2 E2 E2 E2 E2 E2 E2 E2 E2 E2 E2 E2 E2 E2 E3 
+      71   00:C621                          db 226,227,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,226,227
+      71   00:C621  E2 E3 FF FF FF FF FF FF FF FF FF FF FF FF FF FF 
+      71   00:C631  FF FF FF FF FF FF FF FF FF FF FF FF FF FF E2 E3 
+      72   00:C641                          db 226,227,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,39,-1,-1,-1,0,1,226,227
+      72   00:C641  E2 E3 FF FF FF FF FF FF FF FF FF FF FF FF FF FF 
+      72   00:C651  FF FF FF FF FF FF FF FF 27 FF FF FF 00 01 E2 E3 
+      73   00:C661                          db 226,227,-1,-1,-1,39,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,32,33,226,227
+      73   00:C661  E2 E3 FF FF FF 27 FF FF FF FF FF FF FF FF FF FF 
+      73   00:C671  FF FF FF FF FF FF FF FF FF FF FF FF 20 21 E2 E3 
+      74   00:C681                          db 226,227,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,100,101,192,193,224,224,224,224,224,224,224,224,224,224,224,224,224,224,226,227
+      74   00:C681  E2 E3 FF FF FF FF FF FF FF FF FF FF 64 65 C0 C1 
+      74   00:C691  E0 E0 E0 E0 E0 E0 E0 E0 E0 E0 E0 E0 E0 E0 E2 E3 
+      75   00:C6A1                          db 226,227,0,1,-1,-1,-1,-1,-1,-1,-1,-1,132,133,192,193,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,226,227
+      75   00:C6A1  E2 E3 00 01 FF FF FF FF FF FF FF FF 84 85 C0 C1 
+      75   00:C6B1  FF FF FF FF FF FF FF FF FF FF FF FF FF FF E2 E3 
+      76   00:C6C1                          db 226,227,32,33,-1,-1,-1,-1,-1,-1,-1,-1,164,165,192,193,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,226,227
+      76   00:C6C1  E2 E3 20 21 FF FF FF FF FF FF FF FF A4 A5 C0 C1 
+      76   00:C6D1  FF FF FF FF FF FF FF FF FF FF FF FF FF FF E2 E3 
+      77   00:C6E1                          db 226,227,224,224,192,193,224,224,224,224,224,224,224,224,224,224,192,193,-1,-1,-1,-1,-1,39,-1,-1,-1,-1,-1,-1,226,227
+      77   00:C6E1  E2 E3 E0 E0 C0 C1 E0 E0 E0 E0 E0 E0 E0 E0 E0 E0 
+      77   00:C6F1  C0 C1 FF FF FF FF FF 27 FF FF FF FF FF FF E2 E3 
+      78   00:C701                          db 226,227,-1,-1,192,193,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,192,193,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,0,1,226,227
+      78   00:C701  E2 E3 FF FF C0 C1 FF FF FF FF FF FF FF FF FF FF 
+      78   00:C711  C0 C1 FF FF FF FF FF FF FF FF FF FF 00 01 E2 E3 
+      79   00:C721                          db 226,227,-1,-1,192,193,-1,-1,39,-1,-1,-1,-1,-1,4,-1,192,193,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,32,33,226,227
+      79   00:C721  E2 E3 FF FF C0 C1 FF FF 27 FF FF FF FF FF 04 FF 
+      79   00:C731  C0 C1 FF FF FF FF FF FF FF FF FF FF 20 21 E2 E3 
+      80   00:C741                          db 226,227,-1,-1,192,193,-1,-1,-1,-1,-1,-1,-1,-1,224,224,224,224,224,224,224,224,224,224,224,224,224,224,224,224,226,227
+      80   00:C741  E2 E3 FF FF C0 C1 FF FF FF FF FF FF FF FF E0 E0 
+      80   00:C751  E0 E0 E0 E0 E0 E0 E0 E0 E0 E0 E0 E0 E0 E0 E2 E3 
+      81   00:C761                          db 226,227,0,1,192,193,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,226,227
+      81   00:C761  E2 E3 00 01 C0 C1 FF FF FF FF FF FF FF FF FF FF 
+      81   00:C771  FF FF FF FF FF FF FF FF FF FF FF FF FF FF E2 E3 
+      82   00:C781                          db 226,227,32,33,192,193,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,226,227
+      82   00:C781  E2 E3 20 21 C0 C1 FF FF FF FF FF FF FF FF FF FF 
+      82   00:C791  FF FF FF FF FF FF FF FF FF FF FF FF FF FF E2 E3 
+      83   00:C7A1                          db 226,227,224,224,224,224,224,224,224,224,224,224,224,224,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,226,227
+      83   00:C7A1  E2 E3 E0 E0 E0 E0 E0 E0 E0 E0 E0 E0 E0 E0 FF FF 
+      83   00:C7B1  FF FF FF FF FF FF FF FF FF FF FF FF FF FF E2 E3 
+      84   00:C7C1                          db 226,227,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,39,-1,-1,0,-1,226,227
+      84   00:C7C1  E2 E3 FF FF FF FF FF FF FF FF FF FF FF FF FF FF 
+      84   00:C7D1  FF FF FF FF FF FF FF FF FF 27 FF FF 00 FF E2 E3 
+      85   00:C7E1                          db 226,227,226,226,226,226,226,226,226,226,226,226,226,226,226,226,226,226,226,226,226,226,226,226,226,226,226,226,226,226,226,227
+      85   00:C7E1  E2 E3 E2 E2 E2 E2 E2 E2 E2 E2 E2 E2 E2 E2 E2 E2 
+      85   00:C7F1  E2 E2 E2 E2 E2 E2 E2 E2 E2 E2 E2 E2 E2 E2 E2 E3 
+      86   00:C801                      
+      87   00:C801                      
+      88   00:C801                      level4:
+      89   00:C801                          db 224,224,224,224,224,224,224,224,224,224,224,224,224,224,224,224,224,224,224,224,224,224,224,224,224,224,224,224,224,224,224,224
+      89   00:C801  E0 E0 E0 E0 E0 E0 E0 E0 E0 E0 E0 E0 E0 E0 E0 E0 
+      89   00:C811  E0 E0 E0 E0 E0 E0 E0 E0 E0 E0 E0 E0 E0 E0 E0 E0 
+      90   00:C821                          db 224,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,224
+      90   00:C821  E0 FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF 
+      90   00:C831  FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF E0 
+      91   00:C841                          db 224,-1,-1,-1,-1,-1,224,224,224,192,193,224,224,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,4,-1,-1,224
+      91   00:C841  E0 FF FF FF FF FF E0 E0 E0 C0 C1 E0 E0 FF FF FF 
+      91   00:C851  FF FF FF FF FF FF FF FF FF FF FF FF 04 FF FF E0 
+      92   00:C861                          db 224,-1,-1,224,-1,-1,-1,-1,-1,192,193,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,224,224,224,224,-1,-1,224
+      92   00:C861  E0 FF FF E0 FF FF FF FF FF C0 C1 FF FF FF FF FF 
+      92   00:C871  FF FF FF FF FF FF FF FF FF E0 E0 E0 E0 FF FF E0 
+      93   00:C881                          db 224,-1,-1,224,-1,-1,-1,-1,-1,192,193,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,224,-1,-1,224
+      93   00:C881  E0 FF FF E0 FF FF FF FF FF C0 C1 FF FF FF FF FF 
+      93   00:C891  FF FF FF FF FF FF FF FF FF FF FF FF E0 FF FF E0 
+      94   00:C8A1                          db 224,-1,-1,224,-1,-1,-1,-1,-1,192,193,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,224,-1,224,224
+      94   00:C8A1  E0 FF FF E0 FF FF FF FF FF C0 C1 FF FF FF FF FF 
+      94   00:C8B1  FF FF FF FF FF FF FF FF FF FF FF FF E0 FF E0 E0 
+      95   00:C8C1                          db 224,-1,-1,224,-1,-1,-1,-1,-1,192,193,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,224,-1,-1,224
+      95   00:C8C1  E0 FF FF E0 FF FF FF FF FF C0 C1 FF FF FF FF FF 
+      95   00:C8D1  FF FF FF FF FF FF FF FF FF FF FF FF E0 FF FF E0 
+      96   00:C8E1                          db 224,-1,224,224,224,224,-1,-1,-1,192,193,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,224,224,224,224,-1,-1,224
+      96   00:C8E1  E0 FF E0 E0 E0 E0 FF FF FF C0 C1 FF FF FF FF FF 
+      96   00:C8F1  FF FF FF FF FF FF FF FF FF E0 E0 E0 E0 FF FF E0 
+      97   00:C901                          db 224,-1,-1,224,-1,-1,-1,-1,-1,192,193,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,224,-1,-1,224
+      97   00:C901  E0 FF FF E0 FF FF FF FF FF C0 C1 FF FF FF FF FF 
+      97   00:C911  FF FF FF FF FF FF FF FF FF FF FF FF E0 FF FF E0 
+      98   00:C921                          db 224,-1,-1,224,-1,-1,-1,-1,-1,224,224,224,224,224,224,224,224,224,224,224,224,224,224,224,-1,-1,-1,-1,224,-1,-1,224
+      98   00:C921  E0 FF FF E0 FF FF FF FF FF E0 E0 E0 E0 E0 E0 E0 
+      98   00:C931  E0 E0 E0 E0 E0 E0 E0 E0 FF FF FF FF E0 FF FF E0 
+      99   00:C941                          db 224,4,-1,224,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,224,-1,-1,224
+      99   00:C941  E0 04 FF E0 FF FF FF FF FF FF FF FF FF FF FF FF 
+      99   00:C951  FF FF FF FF FF FF FF FF FF FF FF FF E0 FF FF E0 
+     100   00:C961                          db 224,224,-1,224,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,224,224,-1,224
+     100   00:C961  E0 E0 FF E0 FF FF FF FF FF FF FF FF FF FF FF FF 
+     100   00:C971  FF FF FF FF FF FF FF FF FF FF FF FF E0 E0 FF E0 
+     101   00:C981                          db 224,100,101,224,224,224,224,224,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,224,224,224,224,224,-1,-1,224
+     101   00:C981  E0 64 65 E0 E0 E0 E0 E0 FF FF FF FF FF FF FF FF 
+     101   00:C991  FF FF FF FF FF FF FF FF E0 E0 E0 E0 E0 FF FF E0 
+     102   00:C9A1                          db 224,132,133,224,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,224,128,129,224
+     102   00:C9A1  E0 84 85 E0 FF FF FF FF FF FF FF FF FF FF FF FF 
+     102   00:C9B1  FF FF FF FF FF FF FF FF FF FF FF FF E0 80 81 E0 
+     103   00:C9C1                          db 224,164,165,224,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,4,-1,224,160,161,224
+     103   00:C9C1  E0 A4 A5 E0 FF FF FF FF FF FF FF FF FF FF FF FF 
+     103   00:C9D1  FF FF FF FF FF FF FF FF FF FF 04 FF E0 A0 A1 E0 
+     104   00:C9E1                          db 224,224,224,224,224,224,224,224,224,224,224,224,224,224,224,224,224,224,224,224,224,224,224,224,224,224,224,224,224,224,224,224
+     104   00:C9E1  E0 E0 E0 E0 E0 E0 E0 E0 E0 E0 E0 E0 E0 E0 E0 E0 
+     104   00:C9F1  E0 E0 E0 E0 E0 E0 E0 E0 E0 E0 E0 E0 E0 E0 E0 E0 
+     105   00:CA01                      
+     106   00:CA01                      
+     107   00:CA01                      level5:  
+     108   00:CA01                          db 224,224,224,224,224,224,224,224,224,224,224,224,224,224,224,224,224,224,224,224,224,224,224,224,224,224,224,224,224,224,224,224
+     108   00:CA01  E0 E0 E0 E0 E0 E0 E0 E0 E0 E0 E0 E0 E0 E0 E0 E0 
+     108   00:CA11  E0 E0 E0 E0 E0 E0 E0 E0 E0 E0 E0 E0 E0 E0 E0 E0 
+     109   00:CA21                          db 224,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,224
+     109   00:CA21  E0 FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF 
+     109   00:CA31  FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF E0 
+     110   00:CA41                          db 224,-1,-1,-1,-1,-1,224,224,224,192,193,224,224,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,4,-1,-1,224
+     110   00:CA41  E0 FF FF FF FF FF E0 E0 E0 C0 C1 E0 E0 FF FF FF 
+     110   00:CA51  FF FF FF FF FF FF FF FF FF FF FF FF 04 FF FF E0 
+     111   00:CA61                          db 224,-1,-1,224,-1,-1,-1,-1,-1,192,193,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,224,224,224,224,-1,-1,224
+     111   00:CA61  E0 FF FF E0 FF FF FF FF FF C0 C1 FF FF FF FF FF 
+     111   00:CA71  FF FF FF FF FF FF FF FF FF E0 E0 E0 E0 FF FF E0 
+     112   00:CA81                          db 224,-1,-1,224,-1,-1,-1,-1,-1,192,193,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,224,-1,-1,224
+     112   00:CA81  E0 FF FF E0 FF FF FF FF FF C0 C1 FF FF FF FF FF 
+     112   00:CA91  FF FF FF FF FF FF FF FF FF FF FF FF E0 FF FF E0 
+     113   00:CAA1                          db 224,-1,-1,224,-1,-1,-1,-1,-1,192,193,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,224,-1,224,224
+     113   00:CAA1  E0 FF FF E0 FF FF FF FF FF C0 C1 FF FF FF FF FF 
+     113   00:CAB1  FF FF FF FF FF FF FF FF FF FF FF FF E0 FF E0 E0 
+     114   00:CAC1                          db 224,-1,-1,224,-1,-1,-1,-1,-1,192,193,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,224,-1,-1,224
+     114   00:CAC1  E0 FF FF E0 FF FF FF FF FF C0 C1 FF FF FF FF FF 
+     114   00:CAD1  FF FF FF FF FF FF FF FF FF FF FF FF E0 FF FF E0 
+     115   00:CAE1                          db 224,-1,224,224,224,224,-1,-1,-1,192,193,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,224,224,224,224,-1,-1,224
+     115   00:CAE1  E0 FF E0 E0 E0 E0 FF FF FF C0 C1 FF FF FF FF FF 
+     115   00:CAF1  FF FF FF FF FF FF FF FF FF E0 E0 E0 E0 FF FF E0 
+     116   00:CB01                          db 224,-1,-1,224,-1,-1,-1,-1,-1,192,193,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,224,-1,-1,224
+     116   00:CB01  E0 FF FF E0 FF FF FF FF FF C0 C1 FF FF FF FF FF 
+     116   00:CB11  FF FF FF FF FF FF FF FF FF FF FF FF E0 FF FF E0 
+     117   00:CB21                          db 224,-1,-1,224,-1,-1,-1,-1,-1,224,224,224,224,224,224,224,224,224,224,224,224,224,224,224,-1,-1,-1,-1,224,-1,-1,224
+     117   00:CB21  E0 FF FF E0 FF FF FF FF FF E0 E0 E0 E0 E0 E0 E0 
+     117   00:CB31  E0 E0 E0 E0 E0 E0 E0 E0 FF FF FF FF E0 FF FF E0 
+     118   00:CB41                          db 224,4,-1,224,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,224,-1,-1,224
+     118   00:CB41  E0 04 FF E0 FF FF FF FF FF FF FF FF FF FF FF FF 
+     118   00:CB51  FF FF FF FF FF FF FF FF FF FF FF FF E0 FF FF E0 
+     119   00:CB61                          db 224,224,-1,224,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,224,224,-1,224
+     119   00:CB61  E0 E0 FF E0 FF FF FF FF FF FF FF FF FF FF FF FF 
+     119   00:CB71  FF FF FF FF FF FF FF FF FF FF FF FF E0 E0 FF E0 
+     120   00:CB81                          db 224,100,101,224,224,224,224,224,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,224,224,224,224,224,-1,-1,224
+     120   00:CB81  E0 64 65 E0 E0 E0 E0 E0 FF FF FF FF FF FF FF FF 
+     120   00:CB91  FF FF FF FF FF FF FF FF E0 E0 E0 E0 E0 FF FF E0 
+     121   00:CBA1                          db 224,132,133,224,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,224,128,129,224
+     121   00:CBA1  E0 84 85 E0 FF FF FF FF FF FF FF FF FF FF FF FF 
+     121   00:CBB1  FF FF FF FF FF FF FF FF FF FF FF FF E0 80 81 E0 
+     122   00:CBC1                          db 224,164,165,224,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,4,-1,224,160,161,224
+     122   00:CBC1  E0 A4 A5 E0 FF FF FF FF FF FF FF FF FF FF FF FF 
+     122   00:CBD1  FF FF FF FF FF FF FF FF FF FF 04 FF E0 A0 A1 E0 
+     123   00:CBE1                          db 224,224,224,224,224,224,224,224,224,224,224,224,224,224,224,224,224,224,224,224,224,224,224,224,224,224,224,224,224,224,224,224
+     123   00:CBE1  E0 E0 E0 E0 E0 E0 E0 E0 E0 E0 E0 E0 E0 E0 E0 E0 
+     123   00:CBF1  E0 E0 E0 E0 E0 E0 E0 E0 E0 E0 E0 E0 E0 E0 E0 E0 
+     124   00:CC01                      
+     125   00:CC01                      
+     126   00:CC01                      FINAL:
+
+    LABELS
+-------------------------------------------------
+00:0000C000   INICIO
+00:0000C001 X Level0
+00:0000C201 X level1
+00:0000C401 X level2
+00:0000C601 X level3
+00:0000C801 X level4
+00:0000CA01 X level5
+00:0000CC01   FINAL
+
+
+ Output: src/world1.out
+-------------------------------------------------
+
+ Page: 00
+  Org: 0000C000  Size: *  Used: 00000000
+
+    No output
+
+ Output: world1.bin
+-------------------------------------------------
+
+ Page: 00
+  Org: 0000C000  Size: *  Used: 00000C08
+
+   Address   Length Align   Label
+   0000C000    3080         INICIO
